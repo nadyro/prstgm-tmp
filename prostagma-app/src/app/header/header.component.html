@@ -1,0 +1,9 @@
+<div class="prostagma-img">
+    <a routerLink="" routerLinActive="active">Home</a>
+    <!-- <img src="../assets/images/prostagma_logo.png" alt="Prostagma" class="main_home_logo" width="100%"> -->
+</div>
+<div class="login">
+    <a routerLink="/auth" *ngIf="!authService.isLoggedIn" routerLinActive="test_active">Sign in</a>
+    <a *ngIf="authService.isLoggedIn" (click)="authService.logout()" routerLinActive="test_active">Sign out</a>
+    
+</div>
