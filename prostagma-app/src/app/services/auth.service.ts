@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import * as auth0 from 'auth0-js';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { throwError, Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { FormGroup } from '@angular/forms';
+import { Observable, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 (window as any).global = window;
+
 @Injectable()
 export class AuthService {
     auth0 = new auth0.WebAuth({
@@ -18,6 +18,7 @@ export class AuthService {
         audience: 'http://localhost:3001',
         scope: 'openid profile email'
     });
+
     expiresAt: Number;
     isadmin: Number;
     userProfile: any = {};
@@ -62,7 +63,7 @@ export class AuthService {
         })
     }
 
-    handleLoginCallback(){
+    handleLoginCallback() {
         console.log("test");
         this.auth0.parseHash((err, authResult) => {
             if (authResult && authResult.accessToken) {
@@ -90,7 +91,7 @@ export class AuthService {
     get isLoggedIn(): boolean {
         return Date.now() < this.expiresAt && this.authenticated;
         //return this.authenticated;
-        
+
     }
     get isAdmin(): boolean {
         if (this.isadmin == 1)
@@ -131,7 +132,7 @@ export class AuthService {
             console.log(res);
             this._setSession(res, res['authResults'].user);
             this.router.navigate(['/']);
-                return (res);
+            return (res);
         })))
     }
 }
