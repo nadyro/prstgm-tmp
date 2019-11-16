@@ -1,1 +1,79 @@
-<p>teams works!</p>
+<div class="teams_page col-md-11 col-sm-11">
+    <h2>
+        The Docks. Find your sailors !
+    </h2>
+    <p>This is the platform where you can create or join a team. This allows you to use the full potential of Prostagma.</p>
+    <div class="team_blocks create_team col-md-5 col-sm-5">
+        <form #this_form [formGroup]="createTeamForm" (ngSubmit)="onSubmit(this_form)">
+            <div class="create_features">
+                <div class="feature feature_name_container col-md-4">
+                    <div class="feature_front feature_name">
+                        <h5>Choose a name</h5>
+                    </div>
+                    <div class="feature_back feature_name_back">
+                        <input type="text" placeholder="Choose a team name" formControlName="teamName" class="team_name form-control">
+                    </div>
+                </div>
+                <div class="feature feature_purpose_container  col-md-4">
+                    <div class="feature_front feature_purpose">
+                        <h5>Choose your purpose</h5>
+                    </div>
+                    <div class="feature_back feature_purpose_back">
+                        <div class="purpose_selector_container">
+                            <div #purposeSelector class="purposeSelector" (click)="selectPurposes(purposeSelector)">
+                                <p>Select a Purpose</p>
+                            </div>
+                            <div class="purposes">
+                                <div class="purpose" *ngFor="let purpose of purposeList">
+                                    <p #apurpose id="{{purpose}}" (click)="selectPurpose(apurpose)">{{purpose}}</p>
+                                </div>
+                                <input type="hidden" value="purpose" formControlName="purpose">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature feature_members_container col-md-4">
+                    <div class="feature_front feature_members">
+                        <button type="submit" class="btn btn-primary team_submit">
+                            <h5>Proceed</h5>
+                        </button>
+                    </div>
+                    <div class="feature_back feature_members_back">
+                        <button type="submit" class="btn btn-primary team_submit">
+                            <h5>Proceed</h5>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="col-md-2 col-sm-2" style="display:inline-block">
+
+    </div>
+    <div class="team_blocks find_team col-md-5 col-sm-5">
+        <h5>{{team_name}}</h5>
+        <h6>{{team_purpose}}</h6>
+        <div class="team">
+            <div class="user" *ngFor="let user of users">
+                <div class="username">
+                    {{user.username}}
+                </div>
+                <div class="user_name">
+                    {{user.name}} {{user.surname}}
+                </div>
+            </div>
+            <div class="team_creation col-md-4 col-sm-4">
+                <h5>Team Game</h5>
+                <div #game_selection_selector class="game_selection" (click)="display_list(game_selection_selector)">
+                    <div class="game" *ngFor="let game of games">
+                        <p class="game_name">{{game.title}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="team_creation col-md-4 col-sm-4"></div>
+            <div class="team_creation col-md-4 col-sm-4"></div>
+            
+        </div>
+    </div>
+</div>

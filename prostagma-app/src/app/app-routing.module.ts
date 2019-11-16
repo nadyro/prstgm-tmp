@@ -14,9 +14,14 @@ import { ChatComponent } from './chat/chat.component';
 import { MediaComponent } from './media/media.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth/auth.guard';
+import { IsAdminGuard } from './auth/isadmin.guard';
 import { CallbackComponent } from './callback/callback.component';
+import { ProfileComponent } from './profile/profile.component';
+import { Profile } from 'selenium-webdriver/firefox';
+import { AdminComponent } from './admin/admin.component';
 
 const appRoutes: Routes = [
+  { path: 'admin', component: AdminComponent, canActivate: [IsAdminGuard]},
   { path: 'auth', component: AuthComponent },
   { path: 'auth_login', component: AuthLoginComponent },  
   { path: 'caroussel', component: CarousselComponent },
@@ -28,6 +33,7 @@ const appRoutes: Routes = [
   { path: 'news', component: NewsComponent, canActivate: [AuthGuard] },  
   { path: 'media', component: MediaComponent },
   { path: 'callback', component: CallbackComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},  
   { path: '', component: HomeComponent },
   { path: '**', component: AppComponent }
 ]
@@ -38,6 +44,6 @@ const appRoutes: Routes = [
     // { enableTracing: true }
   )],
   exports: [RouterModule],
-  providers: [AuthGuard]
+  providers: [AuthGuard, IsAdminGuard]
 })
 export class AppRoutingModule { }

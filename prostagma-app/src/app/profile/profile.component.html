@@ -1,0 +1,88 @@
+<div class="profile_page col-md-11 col-sm-11">
+    <div class="banner_profile">
+        <div *ngIf="summoner" class="profileCategories leagueInfos col-md-4 col-sm-4">
+            <div class="summonerInfos">
+                <img src="http://ddragon.leagueoflegends.com/cdn/6.3.1/img/profileicon/{{summoner.profileIconId}}.png" width="100px" height="100px">
+                <h4>{{summoner.name}}</h4>
+                <h5>Level {{summoner.summonerLevel}}</h5>
+            </div>
+            <div class="summonerLeague">
+                <div class="leagueBlocks first_block col-md-4 col-sm-4">
+                    <h5>Ranked Queue</h5>
+                    <h6>{{summonerLeague.tier}} {{summonerLeague.rank}}</h6>
+                    <h6>{{summonerLeague.leaguePoints}} LP</h6>
+                </div>
+                <div class="leagueBlocks second_block col-md-4 col-sm-4">
+                    <h5>Wins / Losses</h5>
+                    <h6>{{summonerLeague.wins}} / {{summonerLeague.losses}}</h6>
+                </div>
+                <div class="leagueBlocks third_block col-md-4 col-sm-4">
+                    <h6>{{summonerLeague.wins}} / {{summonerLeague.losses}}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profileCategories form_credentials col-md-4 col-sm-4">
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit(1)">
+            <div class="form-group identity col-md-12 col-sm-12">
+                <label class="">
+                    Username
+                    <input type="text" formControlName="username" class="form-control auth_child" placeholder="{{username}}">
+                </label>
+            </div>
+            <div class="form-group identity col-md-12 col-sm-12">
+                <label class="">
+                    Email :
+                    <input type="text" formControlName="email" class="form-control auth_child" placeholder="{{email}}">
+                </label>
+            </div>
+            <div class="change_password">
+                <h5>Change your password</h5>
+            </div>
+            <div class="form-group identity col-md-12 col-sm-12">
+                <label class="">
+                    Old password :
+                    <input type="text" formControlName="old_password" class="form-control auth_child" placeholder="Old password">
+                </label>
+            </div>
+            <div class="form-group identity col-md-12 col-sm-12">
+                <label class="">
+                    Password :
+                    <input type="text" formControlName="new_password" class="form-control auth_child" placeholder="New password">
+                </label>
+            </div>
+        </form>
+    </div>
+    <!-- <div *ngIf="summoner" class="profileCategories leagueInfos col-md-4 col-sm-4">
+        <div class="summonerInfos">
+            <img src="http://ddragon.leagueoflegends.com/cdn/6.3.1/img/profileicon/{{summoner.profileIconId}}.png" width="100px" height="100px">
+            <h4>{{summoner.name}}</h4>
+            <h5>Level {{summoner.summonerLevel}}</h5>
+        </div>
+        <div class="summonerLeague">
+            <div class="leagueBlocks first_block col-md-4 col-sm-4">
+                <h5>Ranked Queue</h5>
+                <h6>{{summonerLeague.tier}} {{summonerLeague.rank}}</h6>
+                <h6>{{summonerLeague.leaguePoints}} LP</h6>
+            </div>
+            <div class="leagueBlocks second_block col-md-4 col-sm-4">
+                <h6>{{summonerLeague.wins}} / {{summonerLeague.losses}}</h6>
+            </div>
+            <div class="leagueBlocks third_block col-md-4 col-sm-4">
+                <h6>{{summonerLeague.wins}} / {{summonerLeague.losses}}</h6>
+            </div>
+        </div>
+    </div> -->
+    <div class="profileCategories col-md-4 col-sm-4">
+        <h5>Third block</h5>
+    </div>
+    <div class="digital_profile">
+        <h2>
+            Games Played
+        </h2>
+        <h4>League of Legends</h4>
+        <div class="btn_lol_profile">
+            <button class="btn btn-primary" (click)="getLoLProfile()">Get LoL Profile</button>
+        </div>
+    </div>
+</div>

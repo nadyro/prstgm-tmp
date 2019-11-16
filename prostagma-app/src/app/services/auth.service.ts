@@ -19,9 +19,11 @@ export class AuthService {
         scope: 'openid profile email'
     });
     expiresAt: Number;
-    userProfile: any;
+    isadmin: Number;
+    userProfile: any = {};
     accessToken: string;
     authenticated: boolean;
+    date: Date = new Date;
 
     constructor(private http: HttpClient, private router: Router) {
         this.getAccessToken();
@@ -35,10 +37,12 @@ export class AuthService {
     }
 
     private _setSession(authResult, profile) {
-        this.expiresAt = authResult.expiresIn * 1000 + Date.now();
+        console.log(authResult);
+        this.expiresAt = authResult.authResults.expiresIn * 1000 + Date.now();
         this.accessToken = authResult.accessToken;
         this.userProfile = profile;
         this.authenticated = true;
+        this.isadmin = profile.isAdmin;
     }
 
     getUserInfos(authResult) {
@@ -85,6 +89,13 @@ export class AuthService {
 
     get isLoggedIn(): boolean {
         return Date.now() < this.expiresAt && this.authenticated;
+        //return this.authenticated;
+        
+    }
+    get isAdmin(): boolean {
+        if (this.isadmin == 1)
+            return true;
+        else return false;
     }
     team() {
         return (this.http.get(this.prostagma_api_url + '/teams', {
@@ -116,8 +127,11 @@ export class AuthService {
     }
     log(formGroup): Observable<any> {
         console.log(formGroup);
-        return (this.http.get(this.prostagma_api_url + '/db/connect').pipe(map(res => {
+        return (this.http.post(this.prostagma_api_url + '/db/connect', formGroup).pipe(map(res => {
             console.log(res);
+            this._setSession(res, res['authResults'].user);
+            this.router.navigate(['/']);
+                return (res);
         })))
     }
 }

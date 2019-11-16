@@ -19,7 +19,7 @@
         <div class="to_subscribe">
             <p>
                 First time among us ?
-                <a #login routerLink="/auth" *ngIf="!authService.isLoggedIn" (click)="onSubmit(login)" routerLinActive="active">Sign up</a>
+                <a #login routerLink="/auth" *ngIf="!authService.isLoggedIn" routerLinActive="active">Sign up</a>
             </p>
         </div>
     </div>

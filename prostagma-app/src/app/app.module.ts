@@ -18,10 +18,19 @@ import { FindTeamComponent } from './find-team/find-team.component';
 import { ChatComponent } from './chat/chat.component';
 import { MediaComponent } from './media/media.component';
 import { HomeComponent } from './home/home.component';
-//Services
-import { AuthService } from './services/auth.service';
+import { ProfileComponent } from './profile/profile.component';
 import { CallbackComponent } from './callback/callback.component';
 import { AuthLoginComponent } from './auth-login/auth-login.component';
+import { AdminComponent } from './admin/admin.component';
+
+//Services
+import { AuthService } from './services/auth.service';
+import { ProfileService } from './services/profile.service';
+import { TeamsService } from './services/teams.service';
+import { GamesService } from './services/games.service';
+import { LeagueSummonerService } from './services/lol/leagueSummoner.service';
+import { AdminService } from './admin/services/admin.service';
+
 
 @NgModule({
   declarations: [
@@ -37,7 +46,9 @@ import { AuthLoginComponent } from './auth-login/auth-login.component';
     MediaComponent,
     HomeComponent,
     CallbackComponent,
-    AuthLoginComponent
+    AuthLoginComponent,
+    ProfileComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +59,11 @@ import { AuthLoginComponent } from './auth-login/auth-login.component';
   ],
   providers: [
     AuthService,
+    ProfileService,
+    LeagueSummonerService,
+    TeamsService,
+    AdminService,
+    GamesService,
     //{ provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
