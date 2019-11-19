@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import {NgSelectComponent, NgSelectConfig} from '@ng-select/ng-select';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  styleUrls: ['./auth.component.scss'],
+  providers: [NgSelectConfig],
 })
 export class AuthComponent implements OnInit {
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, public selectConfig: NgSelectConfig) {
+  }
 
   gender_validator = 0;
   tooltip_validator = 0;
   formatted_message;
+  items = Array<any>();
+  selected = Array<any>();
   authSubscribeForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.pattern(/^([A-Za-z\- \'\xC0-\xF6\-\xF8-\xFF]{1,})$/)]),
     surname: new FormControl('', [Validators.required, Validators.pattern(/^([A-Za-z\- \'\xC0-\xF6\-\xF8-\xFF]{1,})$/)]),
@@ -97,8 +101,26 @@ export class AuthComponent implements OnInit {
     console.log(event);
     event.target.nextSibling.style.display = "none";
   }
+
+  displaySelected(element) {
+    console.log(element);
+  }
   ngOnInit() {
     this.onChanges();
+    this.items = [
+      {id: 1, name: 'Python'},
+      {id: 2, name: 'Node Js'},
+      {id: 3, name: 'Java'},
+      {id: 4, name: 'PHP', disabled: true},
+      {id: 5, name: 'Django'},
+      {id: 6, name: 'Angular'},
+      {id: 7, name: 'Vue'},
+      {id: 8, name: 'ReactJs'},
+    ];
+    this.selected = [
+      {id: 2, name: 'Node Js'},
+      {id: 8, name: 'ReactJs'}
+    ];
     this.authService.connect().subscribe(res => {
       console.log(res);
     });

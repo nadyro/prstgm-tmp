@@ -140,6 +140,16 @@
             </div>
             <div class="mid_part col-md-1 col-sm-1"></div>
             <div class="second_part col-md-5 col-sm-5">
+              <ng-select #dd class="custom"
+                         [items]="items"
+                         bindLabel="name"
+                         placeholder="Select Gender"
+                         appendTo=".second_part"
+                         multiple="true"
+                         searchable="true"
+                         (add)="displaySelected($event)">
+
+              </ng-select>
                 <div class="form-group">
                     <label>
                         Gender :
