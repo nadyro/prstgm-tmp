@@ -1,28 +1,36 @@
 <div class="admin col-md-11 col-sm-11">
-    <div class="manage_database col-sm-6 col-md-6">
-        <h4>
-            Manage Database
-        </h4>
-        <div class="col-sm-3 col-md-3">
-            <h6>Add games</h6>
-            <div class="add_games_panel">
-                <input #searchgames type="text"  class="form-control" value="" (keyup)="search_games(searchgames)">
-                <p class="server_message">{{message}}</p>                
-                <button #add_game_button type="submit" (click)="add_game(add_game_button)" class="btn btn-primary">
-                    Add
-                </button>
-            <div class="games_list" *ngFor="let game of games">
-                    <p #game_info  (click)="delete_game(game_info, game._id)">{{game.title}}</p>
-                </div>
-            </div>
+  <div class="manage_database col-sm-6 col-md-6">
+    <h4>
+      Manage Database
+    </h4>
+    <div class="col-sm-3 col-md-3">
+      <h6>Add games</h6>
+      <div class="add_games_panel">
+        <ng-select #genericSelection class="custom"
+                   [items]="games"
+                   bindLabel="title"
+                   placeholder="Search games"
+                   appendTo="body"
+                   multiple="true"
+                   searchable="true"
+                   (add)="addGame($event.title)"
+                   (keydown.enter)="addGame(genericSelection)"
+                   [typeahead]="">
+        </ng-select>
+        <!--        <input #searchGamesInput type="text" class="form-control" value="" (keyup)="searchGames(searchGamesInput)">-->
+        <p class="server_message">{{message}}</p>
+        <div class="games_list" *ngFor="let game of games">
+          <p #gameInfo (click)="deleteGame(gameInfo, game._id)">{{game.title}}</p>
         </div>
-        <div class="col-sm-3 col-md-3">
-        </div>
-        <div class="col-sm-3 col-md-3">
-
-        </div>
+      </div>
     </div>
-    <div class="manage col-sm-6 col-md-6">
+    <div class="col-sm-3 col-md-3">
+    </div>
+    <div class="col-sm-3 col-md-3">
 
     </div>
+  </div>
+  <div class="manage col-sm-6 col-md-6">
+
+  </div>
 </div>

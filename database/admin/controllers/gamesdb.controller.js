@@ -91,16 +91,13 @@ exports.addGame = async function (req, res) {
 }
 exports.getGames = async function (req, res) {
     try {
-        var research = req.body.research;
-        if (research !== "") {
-            var db = db_connect();
+      const db = db_connect();
             db.on('error', function (err) {
                 console.error(err);
             });
             db.once('open', function (success) {
-                var collection = db.collection('games');
-                var regEx = new RegExp(research, 'i');
-                var docs = collection.find({ title: regEx }).toArray(function (err, docs) {
+              const collection = db.collection('games');
+              let docs = collection.find({}).toArray(function (err, docs) {
                     if (docs.length >= 1) {
                         console.log(docs);
                         return (res.status(200).json({
@@ -109,24 +106,6 @@ exports.getGames = async function (req, res) {
                             message: 'Everything went well.'
                         }))
                     }
-                    // else if (docs.length < 1) {
-                    //     var Games = mongoose.model('games', gamesSchema);
-                    //     var newGame = new Games({
-                    //         title: 'Dagestan'
-                    //     })
-                    //     newGame.save(function (err, data) {
-                    //         if (err)
-                    //             console.log(err);
-                    //         else {
-                    //             console.log(data);
-                    //         }
-                    //     })
-                    //     console.log("Table doesn't exist but was created.");
-                    //     return (res.status(200).json({
-                    //         status: 200,
-                    //         message: "Table doesn't exist but was created."
-                    //     }));
-                    // }
                     else {
                         return (res.status(201).json({
                             status: 201,
@@ -136,7 +115,6 @@ exports.getGames = async function (req, res) {
                     }
                 });
             });
-        }
     }
     catch (e) {
         throw Error(e);

@@ -9,5 +9,5 @@
     <a *ngIf="authService.isLoggedIn" (click)="authService.logout()" routerLinActive="test_active">Sign out</a>
 </div>
 <div class="admin">
-    <a routerLink="/admin" *ngIf="authService.isadmin" routerLinActive="test_active">Admin</a>
+  <a routerLink="/admin" *ngIf="authService.isAdminBool" routerLinActive="test_active">Admin</a>
 </div>
