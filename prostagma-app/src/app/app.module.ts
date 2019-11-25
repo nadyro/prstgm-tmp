@@ -2,10 +2,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule, NgSelectConfig} from '@ng-select/ng-select';
-import {RouterModule, Routes} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 // Components
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -31,7 +29,6 @@ import {TeamsService} from './services/teams.service';
 import {GamesService} from './services/games.service';
 import {LeagueSummonerService} from './services/lol/leagueSummoner.service';
 import {AdminService} from './admin/services/admin.service';
-import {SelectionModelFactory} from '@ng-select/ng-select/lib/selection-model';
 
 
 @NgModule({
@@ -65,9 +62,9 @@ import {SelectionModelFactory} from '@ng-select/ng-select/lib/selection-model';
     ProfileService,
     LeagueSummonerService,
     TeamsService,
-    AdminService,
     GamesService,
     NgSelectConfig,
+    AdminService
     // {provide: SELECTION_MODEL_FACTORY, useValue: CustomSelectionFactory as SelectionModelFactory }
   ],
   bootstrap: [AppComponent]

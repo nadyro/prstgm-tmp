@@ -17,9 +17,10 @@ export class AuthLoginComponent implements OnInit {
   });
 
   onSubmit(id) {
+    console.log(id);
     this.authService.log(this.authLoginForm.value).subscribe(res => {
       console.log(res);
-    })
+    });
   }
   ngOnInit() {
   }

@@ -1,18 +1,22 @@
 import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AdminService} from './services/admin.service';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private adminService: AdminService) {
+  constructor(public adminService: AdminService) {
+
   }
 
   games;
   message;
+  formGroup;
+  gameCategories;
 
   addGame(addGameButton) {
     console.log(addGameButton);
@@ -50,7 +54,44 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  addTag(name) {
+    this.searchGames();
+    console.log(name);
+    // const adminRes = this.adminService.addGame(name).toPromise();
+    // adminRes.then((res) => {
+    //   if (res['status'] === 202) {
+    //     this.message = res['message'];
+    //   } else if (res['status'] === 200) {
+    //     this.message = res['message'];
+    //   }
+    // });
+  }
+
+  addTagPromise = (addTag) => this.addTag(addTag);
+
+  onSubmit() {
+    this.adminService.addGame(this.formGroup).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  compareElementsFn(item, selection) {
+    if (selection._id && item._id) {
+      return selection._id === item._id;
+    }
+    if (selection.title && item.title) {
+      return selection.title === item.title;
+    }
+    return false;
+  }
+
+  compareElements = (item, selection) => this.compareElementsFn(item, selection);
+
   ngOnInit() {
+    this.formGroup = new FormGroup({
+      gameSelection: new FormControl('', Validators.required),
+      gameCategorySelection: new FormControl('', Validators.required)
+    });
     this.searchGames();
   }
 

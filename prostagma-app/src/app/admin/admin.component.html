@@ -1,22 +1,44 @@
 <div class="admin col-md-11 col-sm-11">
+  <h4>
+    Manage Database
+  </h4>
   <div class="manage_database col-sm-6 col-md-6">
-    <h4>
-      Manage Database
-    </h4>
-    <div class="col-sm-3 col-md-3">
+    <div class="col-sm-12 col-md-12">
       <h6>Add games</h6>
       <div class="add_games_panel">
-        <ng-select #genericSelection class="custom"
-                   [items]="games"
-                   bindLabel="title"
-                   placeholder="Search games"
-                   appendTo="body"
-                   multiple="true"
-                   searchable="true"
-                   (add)="addGame($event.title)"
-                   (keydown.enter)="addGame(genericSelection)"
-                   [typeahead]="">
-        </ng-select>
+        <form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+          <ng-select #genericSelection class="custom"
+                     appearance="underline"
+                     formControlName="gameSelection"
+                     groupBy="categoryName"
+                     [selectableGroup]="true"
+                     [selectableGroupAsModel]="false"
+                     [addTag]="true"
+                     [compareWith]="compareElements"
+                     [items]="games"
+                     addTagText="Add new: "
+                     bindLabel="title"
+                     placeholder="Search games"
+                     multiple="true"
+          >
+          </ng-select>
+          <ng-select class="custom"
+                     [addTag]="true"
+                     appearance="underline"
+                     formControlName="gameCategorySelection"
+                     [compareWith]="compareElements"
+                     [items]="gameCategories"
+                     addTagText="Add new: "
+                     bindLabel="categoryName"
+                     placeholder="Search Categories"
+                     multiple="true"
+          >
+          </ng-select>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <ng-template ng-tag-tmp let-search="searchTerm">
+          <b>Add new: </b>{{search}}
+        </ng-template>
         <!--        <input #searchGamesInput type="text" class="form-control" value="" (keyup)="searchGames(searchGamesInput)">-->
         <p class="server_message">{{message}}</p>
         <div class="games_list" *ngFor="let game of games">
@@ -31,6 +53,32 @@
     </div>
   </div>
   <div class="manage col-sm-6 col-md-6">
-
+    <div class="col-sm-12 col-md-12">
+      <h6>Add Game Category</h6>
+      <!--      <div class="add_games_panel">-->
+      <!--        <form (ngSubmit)="onSubmit()" [formGroup]="formGroup">-->
+      <!--          <ng-select #genericSelection class="custom"-->
+      <!--                     appearance="underline"-->
+      <!--                     formControlName="gameSelection"-->
+      <!--                     [compareWith]="compareElements"-->
+      <!--                     [items]="games"-->
+      <!--                     addTagText="Add new: "-->
+      <!--                     bindLabel="title"-->
+      <!--                     placeholder="Search games"-->
+      <!--                     multiple="true"-->
+      <!--          >-->
+      <!--          </ng-select>-->
+      <!--          <button type="submit" class="btn btn-primary">Submit</button>-->
+      <!--        </form>-->
+      <!--        <ng-template ng-tag-tmp let-search="searchTerm">-->
+      <!--          <b>Add new: </b>{{search}}-->
+      <!--        </ng-template>-->
+      <!--        &lt;!&ndash;        <input #searchGamesInput type="text" class="form-control" value="" (keyup)="searchGames(searchGamesInput)">&ndash;&gt;-->
+      <!--        <p class="server_message">{{message}}</p>-->
+      <!--        <div class="games_list" *ngFor="let game of games">-->
+      <!--          <p #gameInfo (click)="deleteGame(gameInfo, game._id)">{{game.title}}</p>-->
+      <!--        </div>-->
+      <!--      </div>-->
+    </div>
   </div>
 </div>
