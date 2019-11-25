@@ -71,7 +71,7 @@ export class AdminComponent implements OnInit {
 
   onSubmit() {
     this.adminService.addGame(this.formGroup).subscribe(res => {
-      console.log(res);
+      this.searchGames();
     });
   }
 
