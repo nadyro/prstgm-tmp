@@ -2,20 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = require('mongodb').ObjectID;
 
-class Game {
-  title;
-  categoryName;
-  editor;
-  releaseDate;
-  developer;
-  picture;
-}
-
-class Category {
-  categoryName;
-  picture;
-}
-
 const gamesSchema = new Schema({
   title: String,
   categoryName: String,
@@ -35,22 +21,26 @@ function db_connect() {
   return (db);
 }
 
-exports.deleteGame = async function (req) {
+exports.deleteGame = async function (req, res) {
   try {
+    let errorList = [];
+    let successList = [];
     const gameId = req.params.id;
     if (gameId) {
       const db = db_connect();
       db.on('error', function (err) {
-        console.error(err);
+        throw err;
       });
       db.once('open', function () {
         const collection = db.collection('games');
         const docs = collection.deleteOne({_id: ObjectId(gameId)}, function (err, data) {
           if (err) {
-            console.log(err);
+            errorList.push(err);
+            returnErrors(res, successList, errorList, 'deleted');
           } else {
-            console.log(data);
-            console.log(docs);
+            successList.push(data);
+            returnErrors(res, successList, errorList, 'deleted');
+
           }
         })
       })
@@ -60,105 +50,110 @@ exports.deleteGame = async function (req) {
   }
 };
 
-function returnErrors(res, arraySuccess, arrayErrors) {
+function returnErrors(res, arraySuccess, arrayErrors, verb) {
+  let message = '';
+  let status = 0;
   if (arrayErrors.length > 0 && arraySuccess.length > 0) {
-    return (res.status(201).json({
-      status: 201,
-      message: 'Elements partially saved.',
-      errors: arrayErrors,
-      success: arraySuccess
-    }))
+    status = 201;
+    message = 'Elements partially ' + verb + '.';
+    return (res.send({
+      errorList: arrayErrors,
+      successList: arraySuccess,
+      message: message,
+      status: status
+    }));
   } else if (arrayErrors.length > 0 && arraySuccess.length === 0) {
-    return (res.status(504).json({
-      status: 504,
-      message: 'No elements were saved.',
-      errors: arrayErrors
-    }))
+    status = 500;
+    message = 'No elements were ' + verb + '.';
+    return (res.send({
+      errorList: arrayErrors,
+      message: message,
+      status: status
+    }));
   } else {
-    return (res.status(200).json({
-      status: 200,
-      message: 'All elements were saved',
-      success: arraySuccess
+    status = 200;
+    message = 'All elements were ' + verb + '.';
+    return (res.send({
+      successList: arraySuccess,
+      message: message,
+      status: status
     }))
   }
 }
 
-function addCategories(res, db, categories) {
-  try {
-    console.log('TM');
-
-    let arrayErrors = [];
-    let arraySuccess = [];
-    console.log(categories);
-    categories.forEach(category => {
-      console.log(category);
-      let categoryClass = new Category();
-      categoryClass.categoryName = category.categoryName;
-      if (category.picture) {
-        categoryClass.picture = category.picture;
-      }
-      db.on('error', function (err) {
-        console.error(err);
-      });
-      db.once('open', function () {
-        const collection = db.collection('categories');
-        const categoryToSeek = category.categoryName;
-        console.log(categoryToSeek);
-
-        const docs = collection.find({categoryName: categoryToSeek}).toArray(function (err, doc) {
-          if (doc.length >= 1) {
-            let message = 'Category ' + categoryToSeek + 'already exists.';
-            arrayErrors.push(message);
-          } else {
-            console.log('categories')
-            const Categories = mongoose.model('categories', categoriesSchema);
-            const newCategory = new Categories({
-              categoryName: categoryToSeek,
-            });
-            newCategory.save(function (err) {
-              console.log('fdp');
-              if (err) {
-                arrayErrors.push(err);
-              } else {
-                let message = 'Category ' + categoryToSeek + 'saved.';
-                arraySuccess.push(message);
-              }
-            })
-          }
-        });
-      });
-    });
-    console.log(arrayErrors);
-    console.log(arraySuccess);
-
-    // return returnErrors(res, arraySuccess, arrayErrors);
-  } catch (e) {
-    throw Error(e);
-  }
-}
+//
+// function addCategories(res, db, categories) {
+//   try {
+//     let arrayErrors = [];
+//     let arraySuccess = [];
+//     console.log(categories);
+//     categories.forEach(category => {
+//       console.log(category);
+//       let categoryClass = new Category();
+//       categoryClass.categoryName = category.categoryName;
+//       if (category.picture) {
+//         categoryClass.picture = category.picture;
+//       }
+//       db.on('error', function (err) {
+//         console.error(err);
+//       });
+//       db.once('open', function () {
+//         const collection = db.collection('categories');
+//         const categoryToSeek = category.categoryName;
+//         console.log(categoryToSeek);
+//
+//         const docs = collection.find({categoryName: categoryToSeek}).toArray(function (err, doc) {
+//           if (doc.length >= 1) {
+//             let message = 'Category ' + categoryToSeek + 'already exists.';
+//             arrayErrors.push(message);
+//           } else {
+//             console.log('categories')
+//             const Categories = mongoose.model('categories', categoriesSchema);
+//             const newCategory = new Categories({
+//               categoryName: categoryToSeek,
+//             });
+//             newCategory.save(function (err) {
+//               console.log('fdp');
+//               if (err) {
+//                 arrayErrors.push(err);
+//               } else {
+//                 let message = 'Category ' + categoryToSeek + 'saved.';
+//                 arraySuccess.push(message);
+//               }
+//             })
+//           }
+//         });
+//       });
+//     });
+//     console.log(arrayErrors);
+//     console.log(arraySuccess);
+//
+//     // return returnErrors(res, arraySuccess, arrayErrors);
+//   } catch (e) {
+//     throw Error(e);
+//   }
+// }
 
 exports.addGame = async function (req, res) {
   try {
-    const game = req.body.gamesForm;
     let arrayErrors = [];
     let arraySuccess = [];
-
+    const game = req.body.gamesForm;
     if (game !== "") {
       const db = db_connect();
       db.on('error', function (err) {
         console.error(err);
       });
-      let categories = addCategories(res, db, game.gameCategorySelection);
       db.once('open', function () {
         const collection = db.collection('games');
-        const gameToSeek = game.gameSelection;
-        const categoryToSeek = game.gameCategorySelection;
+        const gameToSeek = game.selection;
+        const categoryToSeek = game.categorySelection;
 
         if (gameToSeek)
           gameToSeek.forEach(game => {
             const docs = collection.find({title: game.title}).toArray(function (err, doc) {
               if (doc.length >= 1) {
-                arrayErrors.push('Game ' + game.title + ' already exists in our database.');
+                arrayErrors.push(doc);
               } else {
                 console.log(docs);
                 const Games = mongoose.model('games', gamesSchema);
@@ -170,13 +165,13 @@ exports.addGame = async function (req, res) {
                   if (err)
                     console.log(err);
                   else {
-                    arraySuccess.push('Game ' + game.title + ' saved');
+                    arraySuccess.push(game);
                   }
                 })
               }
             })
           });
-        returnErrors(res, arraySuccess, arrayErrors);
+        returnErrors(res, arraySuccess, arrayErrors, 'added');
       });
     }
   } catch (e) {
@@ -194,13 +189,9 @@ exports.getCategories = async function (req, res) {
       const collection = db.collection('categories');
       let docs = collection.find({}).toArray(function (err, doc) {
         if (doc.length >= 1) {
-          return (res.status(200).json({
-            status: 200,
-            categories: doc,
-            message: 'Everything went well'
-          }))
+          return (res.send(doc))
         } else {
-          return (res.status(500).json({
+          return (res.send({
             status: 500,
             message: 'No category found.'
           }))
@@ -229,15 +220,14 @@ exports.getGames = async function (req, res) {
         docs = collection.find({});
       }
       docs.toArray(function (err, doc) {
+        if (err) {
+          throw error;
+        }
         if (doc.length >= 1) {
-          console.log(docs);
-          return (res.status(200).json({
-            status: 200,
-            games: doc,
-            message: 'Everything went well.'
-          }))
+          console.log(doc);
+          return res.send(doc);
         } else {
-          return (res.status(201).json({
+          return (res.send({
             status: 201,
             games: [],
             message: 'No games found.'

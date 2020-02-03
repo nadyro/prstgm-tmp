@@ -2,8 +2,10 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AdminService} from './services/admin.service';
 import {Subject, of, concat, Observable, ObservableInput, BehaviorSubject} from 'rxjs';
-import {catchError, distinctUntilChanged, switchMap, tap} from 'rxjs/operators';
+import {catchError, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
 import {NgSelectComponent} from '@ng-select/ng-select';
+import {Games} from "../models/Games";
+import {Categories} from "../models/Categories";
 
 @Component({
   selector: 'app-admin',
@@ -16,7 +18,8 @@ export class AdminComponent implements OnInit {
 
   }
 
-  games$;
+  private games$: Observable<Games[]>;
+  private categories$: Observable<Categories[]>;
   message = 'Ceci est un test';
   formGroup;
   gameCategories;
@@ -60,11 +63,9 @@ export class AdminComponent implements OnInit {
     select.open();
   }
   searchGames() {
-    this.adminService.searchGamesInDb().subscribe(res => {
-      if (res['games']) {
-        this.games$ = res['games'];
-      }
-    });
+    this.games$ = this.adminService.searchGamesInDb().pipe(map(games => {
+      return games;
+    }));
   }
 
   returnSearchGames(): any {
@@ -76,21 +77,21 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  deleteGame(game, gameId) {
-    const tabLength = this.games$.length;
-    let i = 0;
-    while (i < tabLength) {
-      if (this.games$[i]._id === gameId) {
-        this.games$.splice(i, 1);
-        i = 0;
-        break;
-      }
-      i++;
-    }
-    this.adminService.deleteGameInDb(gameId).subscribe(res => {
-      console.log(res);
-    });
-  }
+  // deleteGame(game, gameId) {
+  //   const tabLength = this.games$.length;
+  //   let i = 0;
+  //   while (i < tabLength) {
+  //     if (this.games$[i]._id === gameId) {
+  //       this.games$.splice(i, 1);
+  //       i = 0;
+  //       break;
+  //     }
+  //     i++;
+  //   }
+  //   this.adminService.deleteGameInDb(gameId).subscribe(res => {
+  //     console.log(res);
+  //   });
+  // }
 
   labelBind(item): string {
     return item.indexOf(item.title);
@@ -121,6 +122,7 @@ export class AdminComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
+    // TODO Add a feature to display added games and already existing ones in the view.
     this.adminService.addGame(this.formGroup).subscribe(res => {
       this.searchGames();
       this.loading = false;
@@ -151,25 +153,20 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.adminService.searchGamesInDb().subscribe(res => {
-      if (res['games']) {
-        this.games$ = res['games'];
-        console.log(this.games$);
-
-      }
-    });
-
-    this.adminService.getCategories().subscribe((res) => {
-      this.gameCategories = res['categories'];
-    });
+    this.games$ = this.adminService.searchGamesInDb().pipe(map(games => {
+      console.log(games);
+      return games;
+    }));
+    this.categories$ = this.adminService.getCategories().pipe(map(categories => categories));
+    //
+    // this.adminService.getCategories().subscribe((res) => {
+    //   this.gameCategories = res['categories'];
+    // });
     this.formGroup = new FormGroup({
-      gameSelection: new FormControl('', Validators.required),
-      gameCategorySelection: new FormControl('', Validators.required)
+      selection: new FormControl('', Validators.required),
+      categorySelection: new FormControl('', Validators.required)
     });
-    console.log(this.formGroup.get('gameSelection'));
-    this.adminService.searchGamesInDb('5ddd053e327167d69f7b891a').subscribe(res => {
-      console.log(res);
-    });
+    // console.log(this.formGroup.get('gameSelection'));
   }
 
 }

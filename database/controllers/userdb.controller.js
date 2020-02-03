@@ -89,12 +89,7 @@ exports.getUsers = async function (req, res) {
             var collection = db.collection('users');
             var docs = collection.find({}).toArray(function (err, docs) {
                 if (docs) {
-                    console.log(docs);
                   return res.send(docs);
-                    return (res.status(200).json({
-                        status: 200,
-                        users: docs
-                    }))
                 }
                 else {
                     return (res.status(400).json({
@@ -106,6 +101,7 @@ exports.getUsers = async function (req, res) {
         })
     }
     catch (e) {
+      console.log('we here');
         throw Error(e);
     }
 }
