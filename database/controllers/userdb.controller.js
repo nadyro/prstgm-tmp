@@ -86,11 +86,11 @@ exports.getUsers = async function (req, res) {
             console.error(err);
         });
         db.once('open', function (success) {
-            console.log(req.body);
             var collection = db.collection('users');
             var docs = collection.find({}).toArray(function (err, docs) {
                 if (docs) {
                     console.log(docs);
+                  return res.send(docs);
                     return (res.status(200).json({
                         status: 200,
                         users: docs

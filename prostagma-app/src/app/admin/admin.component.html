@@ -7,26 +7,47 @@
       <h6>Add games</h6>
       <div class="add_games_panel">
         <form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+          <label for="games">Games</label>
           <ng-select #genericSelection class="custom"
                      appearance="underline"
+                     notFoundText="No games found"
                      formControlName="gameSelection"
-                     groupBy="categoryName"
+                     labelForId="games"
+                     addTag="true"
+                     [loading]="loading"
+                     loadingText="Please wait..."
+                     [groupBy]="groupByFn"
+                     [groupValue]="groupValueFn"
                      [selectableGroup]="true"
-                     [selectableGroupAsModel]="false"
-                     [addTag]="true"
-                     [compareWith]="compareElements"
-                     [items]="games"
+                     [selectableGroupAsModel]="true"
+                     [items]="games$"
                      addTagText="Add new: "
-                     bindLabel="title"
+                     bindLabel="item$.title"
+                     [searchFn]="customSearchFn"
                      placeholder="Search games"
-                     multiple="true"
-          >
+                     searchable="true"
+                     closeOnSelect=""
+                     minTermLength="2"
+                     virtualScroll=""
+                     [inputAttrs]="{test: loading, test1: message}"
+                     tabIndex="0"
+                     [clearSearchOnAdd]="true"
+                     multiple="true">
+            <ng-template ng-option-tmp let-item="item" let-item$="item$">
+              {{item.title}}
+            </ng-template>
+            <ng-template ng-optgroup-tmp let-item="item">
+              <span style="vertical-align: middle;">{{item.categoryName}}</span>
+              <span class="ml-1 badge badge-secondary">{{item.total}}</span>
+            </ng-template>
           </ng-select>
+          <label for="categories">Categories</label>
           <ng-select class="custom"
+                     notFoundText="No categories found"
                      [addTag]="true"
+                     labelForId="categories"
                      appearance="underline"
                      formControlName="gameCategorySelection"
-                     [compareWith]="compareElements"
                      [items]="gameCategories"
                      addTagText="Add new: "
                      bindLabel="categoryName"
@@ -34,6 +55,7 @@
                      multiple="true"
           >
           </ng-select>
+          <button (click)="openSelect(genericSelection)" class="btn btn-sm btn-secondary">Open</button>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         <ng-template ng-tag-tmp let-search="searchTerm">

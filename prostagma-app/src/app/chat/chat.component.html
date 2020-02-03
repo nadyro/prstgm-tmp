@@ -1,1 +1,20 @@
-<p>chat works!</p>
+<div class="chat-page col-md-11 col-sm-11">
+  <h3>Messenger</h3>
+  <div class="messenger-container container">
+    <div class="left-panel panels col-3">
+      <h4>Users online</h4>
+      <div class="borders left"></div>
+      <ng-container *ngFor="let user of users$ | async">
+        <p>{{user.username}}</p>
+      </ng-container>
+    </div>
+    <div class="middle-panel panels col-6">
+      <div class="borders right"></div>
+      <div class="borders left"></div>
+    </div>
+    <div class="right-panel panels col-3">
+      <h4>My profile</h4>
+      <div class="borders right"></div>
+    </div>
+  </div>
+</div>

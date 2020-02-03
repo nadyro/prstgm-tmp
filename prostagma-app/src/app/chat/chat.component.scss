@@ -1,0 +1,40 @@
+.chat-page {
+  float: right;
+  display: block;
+}
+
+.chat-page .messenger-container {
+  height: 600px;
+}
+
+.chat-page .messenger-container .panels {
+  height: 100%;
+  float: left;
+  display: inline-block;
+}
+
+.chat-page .messenger-container .panels h4 {
+  text-align: center;
+}
+
+.chat-page .messenger-container .borders {
+  position: absolute;
+  height: 100px;
+  width: 1px;
+  background: black;
+  transform: translateY(-50%);
+  top: 50%;
+}
+
+.chat-page .messenger-container .borders.right {
+  right: 0;
+}
+
+.chat-page .messenger-container .borders.left {
+  left: 0;
+}
+
+.chat-page .messenger-container .middle-panel .borders {
+  height: 300px;
+}
+

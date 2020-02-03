@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ChatService} from "../services/chat.service";
+import {Observable} from "rxjs";
+import {Users} from "../models/users";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-chat',
@@ -6,8 +10,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
+  users$: Observable<Users[]>;
 
-  constructor() { }
+  constructor(private chatService: ChatService) {
+    this.users$ = this.chatService.getUsers().pipe(map(users => users));
+    this.chatService.getUsers().subscribe(users => {
+      users.forEach(user => {
+        console.log(user.username);
+      });
+    });
+  }
 
   ngOnInit() {
   }

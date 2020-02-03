@@ -42,6 +42,7 @@ router.get('/db/getGames', DbGamesController.getGames);
 
 // DB ADMIN ROUTES
 router.get('/db/admin/getGames', DbGamesAdminController.getGames);
+router.get('/db/admin/getCategories', DbGamesAdminController.getCategories);
 router.post('/db/admin/addGame', DbGamesAdminController.addGame);
 router.delete('/db/admin/deleteGame/:id', DbGamesAdminController.deleteGame);
 
