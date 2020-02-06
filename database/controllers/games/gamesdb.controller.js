@@ -17,10 +17,7 @@ exports.getGames = async function (req, res) {
             var docs = collection.find({}).toArray(function (err, docs) {
                 if (docs) {
                     console.log(docs);
-                    return (res.status(200).json({
-                        status: 200,
-                        games: docs
-                    }))
+                    return (res.send(docs));
                 }
                 else {
                     return (res.status(400).json({

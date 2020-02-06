@@ -8,7 +8,7 @@ import {Categories} from '../../../../../models/Categories';
 import {ResponseReturn} from '../../../../../models/ResponseReturn';
 
 @Injectable()
-export class AdminService {
+export class HomeService {
   constructor(private http: HttpClient) {
   }
 
@@ -45,11 +45,9 @@ export class AdminService {
     }
   }
 
-  deleteGameInDb(gameId) {
-    console.log('Test');
-    return (this.http.delete(this.prostagmaApiUrl + '/db/admin/deleteGame/' + gameId).pipe(map(res => {
-      console.log(res);
-      return (res);
+  deleteGameInDb(gameId): Observable<Games[]> {
+    return (this.http.delete<Games[]>(this.prostagmaApiUrl + '/db/admin/deleteGame/' + gameId).pipe(map(games => {
+      return games;
     })));
   }
 }

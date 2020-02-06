@@ -1,0 +1,9 @@
+<div class="prostagma-img">
+  <a routerLink="">Home</a>
+</div>
+<div class="profile" *ngIf="authService.isLoggedIn">
+  <a routerLink="/profile">Profile</a>
+</div>
+<div class="games">
+  <a routerLink="/admin/games">Games</a>
+</div>

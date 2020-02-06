@@ -4,7 +4,7 @@ import {AdminService} from './services/admin.service';
 import {Subject, of, concat, Observable, ObservableInput, BehaviorSubject} from 'rxjs';
 import {catchError, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
 import {NgSelectComponent} from '@ng-select/ng-select';
-import {Games} from "../models/Games";
+import {Games} from "../../../../models/Games";
 import {Categories} from "../models/Categories";
 
 @Component({

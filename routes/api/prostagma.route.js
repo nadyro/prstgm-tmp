@@ -7,8 +7,8 @@ var findController = require('../../controllers/find.controller');
 var chatController = require('../../controllers/chat.controller');
 var profileController = require('../../controllers/profile.controller');
 var DbGamesAdminController = require('../../database/admin/controllers/gamesdb.controller');
-var DbUserController = require('../../database/controllers/userdb.controller');
-var DbGamesController = require('../../database/controllers/gamesdb.controller');
+var DbUserController = require('../../database/controllers/users/userdb.controller');
+var DbGamesController = require('../../database/controllers/games/gamesdb.controller');
 
 //AUTH ROUTES
 // GET

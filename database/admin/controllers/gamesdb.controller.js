@@ -1,3 +1,5 @@
+// const gamesSchema = require('../../models/gamesSchema');
+const gamess = require("../../controllers/games/gamesdb.controller");
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = require('mongodb').ObjectID;
@@ -39,8 +41,7 @@ exports.deleteGame = async function (req, res) {
             returnErrors(res, successList, errorList, 'deleted');
           } else {
             successList.push(data);
-            returnErrors(res, successList, errorList, 'deleted');
-
+            gamess.getGames(req, res);
           }
         })
       })
@@ -138,7 +139,10 @@ exports.addGame = async function (req, res) {
   try {
     let arrayErrors = [];
     let arraySuccess = [];
+    let countSuccess = 0;
     const game = req.body.gamesForm;
+    console.log(game);
+    console.log(req.body.gamesForm);
     if (game !== "") {
       const db = db_connect();
       db.on('error', function (err) {
@@ -149,28 +153,37 @@ exports.addGame = async function (req, res) {
         const gameToSeek = game.selection;
         const categoryToSeek = game.categorySelection;
 
-        if (gameToSeek)
+        if (gameToSeek){
           gameToSeek.forEach(game => {
             const docs = collection.find({title: game.title}).toArray(function (err, doc) {
+              console.log(game);
               if (doc.length >= 1) {
+                res.send({
+                  message: 'Game already exists in our database',
+                  status: 204,
+                  game: doc
+                });
                 arrayErrors.push(doc);
               } else {
-                console.log(docs);
                 const Games = mongoose.model('games', gamesSchema);
                 const newGame = new Games({
                   title: game.title,
                   categoryName: categoryToSeek[0].categoryName
                 });
                 newGame.save(function (err) {
-                  if (err)
+                  if (err){
+                    countSuccess--;
                     console.log(err);
+                  }
                   else {
+                    countSuccess++;
                     arraySuccess.push(game);
                   }
                 })
               }
             })
           });
+        }
         returnErrors(res, arraySuccess, arrayErrors, 'added');
       });
     }
@@ -205,9 +218,6 @@ exports.getCategories = async function (req, res) {
 exports.getGames = async function (req, res) {
   try {
     const db = db_connect();
-    console.log(req.query);
-
-
     db.on('error', function (err) {
       console.error(err);
     });
@@ -224,7 +234,6 @@ exports.getGames = async function (req, res) {
           throw error;
         }
         if (doc.length >= 1) {
-          console.log(doc);
           return res.send(doc);
         } else {
           return (res.send({
