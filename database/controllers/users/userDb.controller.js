@@ -1,22 +1,22 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 function db_connect() {
     mongoose.connect('mongodb://localhost/prostagma', { useNewUrlParser: true });
-    var db = mongoose.connection;
+  const db = mongoose.connection;
     return (db);
 }
 exports.connect = async function (req, res) {
-    var authResults;
+  let authResults;
     try {
         mongoose.connect('mongodb://localhost/prostagma', { useNewUrlParser: true });
-        var db = mongoose.connection;
+      const db = mongoose.connection;
         console.log(req.body);
         console.log("Attempting to login...");
         db.on('error', function (err) {
             console.error(err);
         });
-        db.once('open', function (success) {
-            var collection = db.collection('users');
+      db.once('open', function () {
+        const collection = db.collection('users');
             collection.findOne({ email: req.body.email }, (function (err, docs) {
                 if (docs) {
                     console.log(docs.password);
@@ -26,7 +26,7 @@ exports.connect = async function (req, res) {
                             expiresIn: 7200,
                             accessToken: 'fdp',
                             user: docs
-                        }
+                        };
                         return (res.status(200).json({
                             status: 200,
                             authResults: authResults
@@ -39,25 +39,20 @@ exports.connect = async function (req, res) {
                 }
                 db.close();
             }))
-        })
-        // return (res.status(200).json({
-        //     status: 200,
-        //     authResults: authResults
-        // }));
+      });
     }
     catch (e) {
         throw Error(e);
     }
-}
+};
 exports.getUserByEmail = async function (req, res) {
     try {
-        var db = db_connect();
+      const db = db_connect();
         db.on('error', function (err) {
             console.error(err);
         });
-        db.once('open', function (success) {
-            console.log(req.body)
-            var collection = db.collection('users');
+      db.once('open', function () {
+        const collection = db.collection('users');
             collection.findOne({ email: req.body.email }, function (err, docs) {
                 if (docs) {
                     console.log(docs);
@@ -78,16 +73,16 @@ exports.getUserByEmail = async function (req, res) {
     catch (e) {
         throw Error(e);
     }
-}
+};
 exports.getUsers = async function (req, res) {
     try {
-        var db = db_connect();
+      const db = db_connect();
         db.on('error', function (err) {
             console.error(err);
         });
-        db.once('open', function (success) {
-            var collection = db.collection('users');
-            var docs = collection.find({}).toArray(function (err, docs) {
+      db.once('open', function () {
+        const collection = db.collection('users');
+        const docs = collection.find({}).toArray(function (err, docs) {
                 if (docs) {
                   return res.send(docs);
                 }
@@ -104,20 +99,20 @@ exports.getUsers = async function (req, res) {
       console.log('we here');
         throw Error(e);
     }
-}
+};
 exports.saveUser = async function (req, res) {
     try {
         console.log(req.body);
         mongoose.connect('mongodb://localhost/prostagma', { useNewUrlParser: true });
-        var db = mongoose.connection;
+      const db = mongoose.connection;
         db.on('error', function (err) {
             console.error(err);
         });
-        db.once('open', function (success) {
+      db.once('open', function () {
             console.log('connected');
         });
-        var Schema = mongoose.Schema;
-        var userSchema = new Schema({
+      const Schema = mongoose.Schema;
+      const userSchema = new Schema({
             name: String,
             surname: String,
             email: String,
@@ -129,9 +124,9 @@ exports.saveUser = async function (req, res) {
             zip: Number,
             city: String,
             username: String
-        })
-        var User = mongoose.model('User', userSchema);
-        var newUser = new User({
+      });
+      const User = mongoose.model('User', userSchema);
+      const newUser = new User({
             name: req.body.name,
             surname: req.body.surname,
             email: req.body.email,
@@ -143,7 +138,7 @@ exports.saveUser = async function (req, res) {
             zip: req.body.zip,
             city: req.body.city,
             username: req.body.username
-        })
+      });
         newUser.save(function (err, data) {
             if (err) {
                 console.error(err);
@@ -156,4 +151,4 @@ exports.saveUser = async function (req, res) {
     catch (e) {
         throw Error(e);
     }
-}
+};

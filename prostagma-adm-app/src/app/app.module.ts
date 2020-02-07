@@ -11,13 +11,15 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {HeaderComponent} from './header/header.component';
 import {AuthService} from './services/auth.service';
 import {ProfileComponent} from './profile/profile.component';
+import {CategoriesComponent} from './categories/categories.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GamesComponent,
     HeaderComponent,
-    ProfileComponent
+    ProfileComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,

@@ -2,14 +2,12 @@
   <h4>
     Manage Database
   </h4>
-  <div class="manage_database col-sm-6 col-md-6">
-    <div class="col-sm-12 col-md-12">
-      <h6>Add games</h6>
-      <div class="add_games_panel">
+  <div class="manage-database col-sm-6 col-md-6">
+    <div class="col-sm-6 col-md-6">
+      <div class="add-games-panel">
+        <h6>Add games</h6>
         <form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
-          <label for="games">Games</label>
           <ng-select #genericSelection class="custom"
-                     appearance="underline"
                      notFoundText="No games found"
                      formControlName="selection"
                      labelForId="games"
@@ -20,12 +18,9 @@
                      [groupValue]="groupValueFn"
                      [selectableGroupAsModel]="true"
                      [items]="games$ | async"
-                     addTagText="Add new: "
                      bindLabel="title"
                      [searchFn]="customSearchFn"
                      placeholder="Search games"
-                     searchable="true"
-                     minTermLength="2"
                      multiple="true">
             <ng-template ng-option-tmp let-item="item" let-item$="item$">
               {{item.title}}
@@ -38,33 +33,23 @@
             </ng-template>
           </ng-select>
           <p>{{message}}</p>
-          <label for="categories">Categories</label>
+
+          <h4>Categories</h4>
           <div class="categoriesRadio">
             <div class="cat-radio-btn" *ngFor="let category of categories$ | async">
               <input id="{{category._id}}" type="radio" formControlName="categorySelection" value="{{category.categoryName}}">
               <label for="{{category._id}}">{{category.categoryName}}</label>
-
             </div>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        <ng-template ng-tag-tmp let-search="searchTerm">
-          <b>Add new: </b>{{search}}
-        </ng-template>
-        <div class="games_list" *ngFor="let game of games">
-          <p #gameInfo (click)="deleteGame(game._id)">{{game.title}}</p>
-        </div>
       </div>
-    </div>
-    <div class="col-sm-3 col-md-3">
-    </div>
-    <div class="col-sm-3 col-md-3">
-
     </div>
   </div>
   <div class="manage col-sm-6 col-md-6">
-    <div class="col-sm-12 col-md-12">
+    <div class="col-sm-6 col-md-6">
       <h6>Add Game Category</h6>
+      <app-categories></app-categories>
     </div>
   </div>
 </div>

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {HomeService} from './services/home.service';
 import {Subject, Observable} from 'rxjs';
-import {map,} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {Games} from '../../../../models/Games';
 import {Categories} from '../../../../models/Categories';
 
@@ -78,9 +78,6 @@ export class GamesComponent implements OnInit {
   ngOnInit() {
     this.games$ = this.adminService.searchGamesInDb().pipe(map(games => games));
     this.categories$ = this.adminService.getCategories().pipe(map(categories => categories));
-    this.categories$.subscribe(res => {
-      console.log(res);
-    })
     this.formGroup = new FormGroup({
       selection: new FormControl('', Validators.required),
       categorySelection: new FormControl('', Validators.required)

@@ -1,11 +1,11 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AdminService} from './services/admin.service';
-import {Subject, of, concat, Observable, ObservableInput, BehaviorSubject} from 'rxjs';
-import {catchError, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {NgSelectComponent} from '@ng-select/ng-select';
-import {Games} from "../../../../models/Games";
-import {Categories} from "../models/Categories";
+import {Games} from '../../../../models/Games';
+import {Categories} from '../../../../models/Categories';
 
 @Component({
   selector: 'app-admin',
@@ -68,50 +68,9 @@ export class AdminComponent implements OnInit {
     }));
   }
 
-  returnSearchGames(): any {
-    return this.adminService.searchGamesInDb().subscribe(res => {
-      if (res['games']) {
-        return res['games'];
-      }
-      return [];
-    });
-  }
-
-  // deleteGame(game, gameId) {
-  //   const tabLength = this.games$.length;
-  //   let i = 0;
-  //   while (i < tabLength) {
-  //     if (this.games$[i]._id === gameId) {
-  //       this.games$.splice(i, 1);
-  //       i = 0;
-  //       break;
-  //     }
-  //     i++;
-  //   }
-  //   this.adminService.deleteGameInDb(gameId).subscribe(res => {
-  //     console.log(res);
-  //   });
-  // }
-
   labelBind(item): string {
     return item.indexOf(item.title);
   }
-
-  addTag() {
-    console.log(this.adminService);
-    // this.loading = true;
-    // const adminRes = this.adminService.addGame(name).toPromise();
-    // adminRes.then((res) => {
-    //   if (res['status'] === 202) {
-    //     this.message = res['message'];
-    //   } else if (res['status'] === 200) {
-    //     this.message = res['message'];
-    //   }
-    //   this.loading = false;
-    // });
-  }
-
-  addTagPromise = (addTag) => this.addTag();
 
   groupValue(content, arrayValue) {
     return ({categoryName: content, total: arrayValue.length});
@@ -123,7 +82,7 @@ export class AdminComponent implements OnInit {
   onSubmit() {
     this.loading = true;
     // TODO Add a feature to display added games and already existing ones in the view.
-    this.adminService.addGame(this.formGroup).subscribe(res => {
+    this.adminService.addGame(this.formGroup).subscribe(() => {
       this.searchGames();
       this.loading = false;
     });

@@ -1,20 +1,20 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 function db_connect() {
     mongoose.connect('mongodb://localhost/prostagma', { useNewUrlParser: true });
-    var db = mongoose.connection;
+  const db = mongoose.connection;
     return (db);
 }
 
 exports.getGames = async function (req, res) {
     try {
-        var db = db_connect();
+      const db = db_connect();
         db.on('error', function (err) {
             console.error(err);
         });
-        db.once('open', function (success) {
-            var collection = db.collection('games');
-            var docs = collection.find({}).toArray(function (err, docs) {
+      db.once('open', function () {
+        const collection = db.collection('games');
+        const docs = collection.find({}).toArray(function (err, docs) {
                 if (docs) {
                     console.log(docs);
                     return (res.send(docs));
@@ -31,4 +31,4 @@ exports.getGames = async function (req, res) {
     catch (e) {
         throw Error(e);
     }
-}
+};

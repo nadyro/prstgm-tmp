@@ -1,10 +1,16 @@
 .admin{
     float: right;
 }
-.manage_database, .manage{
+
+.manage-database, .manage {
     display: inline-block;
 }
-.server_message{
+
+.manage {
+  float: right;
+}
+
+.server-message {
     color: red;
 }
 .items-title-trash {

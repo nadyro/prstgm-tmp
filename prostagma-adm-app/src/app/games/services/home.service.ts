@@ -2,10 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {FormGroup} from '@angular/forms';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Games} from '../../../../../models/Games';
 import {Categories} from '../../../../../models/Categories';
-import {ResponseReturn} from '../../../../../models/ResponseReturn';
 
 @Injectable()
 export class HomeService {
@@ -28,6 +27,16 @@ export class HomeService {
     return this.http.get<Categories[]>(this.prostagmaApiUrl + '/db/admin/getCategories').pipe(map(categories => {
       return categories;
     }));
+  }
+
+  addCategories(categoryForm: FormGroup): Observable<Categories[]> {
+    const obj = {categoriesForm: categoryForm.value};
+    console.log(obj);
+    return this.http.post<Categories[]>(this.prostagmaApiUrl + '/db/admin/addCategories', obj)
+      .pipe(map(categories => {
+        console.log(categories);
+        return categories;
+      }));
   }
 
   searchGamesInDb(id?: string, games?: Observable<Games[]>): Observable<Games[]> {
