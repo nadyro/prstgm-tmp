@@ -10,3 +10,12 @@
 .items-title-trash {
   float: right;
 }
+.cat-radio-btn {
+  display: block;
+}
+.cat-radio-btn label {
+  margin: 0 12px;
+}
+.cat-radio-btn input, .cat-radio-btn label{
+  display: inline-block;
+}

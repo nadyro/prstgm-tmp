@@ -1,4 +1,5 @@
 export class Games {
+  _id: string;
   title: string;
   categoryName: string;
   editor: string;

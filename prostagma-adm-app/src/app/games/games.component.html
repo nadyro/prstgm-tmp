@@ -37,20 +37,15 @@
               <span class="ml-1 badge badge-secondary">{{item.total}}</span>
             </ng-template>
           </ng-select>
+          <p>{{message}}</p>
           <label for="categories">Categories</label>
-          <ng-select class="custom"
-                     notFoundText="No categories found"
-                     [addTag]="true"
-                     labelForId="categories"
-                     appearance="underline"
-                     formControlName="categorySelection"
-                     [items]="categories$ | async"
-                     addTagText="Add new: "
-                     bindLabel="categoryName"
-                     placeholder="Search Categories"
-                     multiple="true"
-          >
-          </ng-select>
+          <div class="categoriesRadio">
+            <div class="cat-radio-btn" *ngFor="let category of categories$ | async">
+              <input id="{{category._id}}" type="radio" formControlName="categorySelection" value="{{category.categoryName}}">
+              <label for="{{category._id}}">{{category.categoryName}}</label>
+
+            </div>
+          </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         <ng-template ng-tag-tmp let-search="searchTerm">

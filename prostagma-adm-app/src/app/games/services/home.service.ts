@@ -15,10 +15,10 @@ export class HomeService {
   apiUrl = 'http://localhost:3001';
   prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
 
-  addGame(gameForm: FormGroup): Observable<ResponseReturn> {
+  addGame(gameForm: FormGroup): Observable<Games[]> {
     const obj = {gamesForm: gameForm.value};
     console.log(obj);
-    return this.http.post<ResponseReturn>(this.prostagmaApiUrl + '/db/admin/addGame', obj).pipe(map(res => {
+    return this.http.post<Games[]>(this.prostagmaApiUrl + '/db/admin/addGame', obj).pipe(map(res => {
       console.log(res);
       return (res);
     }));

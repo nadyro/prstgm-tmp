@@ -19,6 +19,7 @@ enum gamesSelection {
 })
 export class GamesComponent implements OnInit {
 
+  private message: string;
   constructor(public adminService: HomeService) {
   }
 
@@ -47,11 +48,26 @@ export class GamesComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    // TODO Add a feature to display added games and already existing ones in the view.
-    this.adminService.addGame(this.formGroup).subscribe(res => {
-      this.searchGames();
-      this.loading = false;
+    let gamesList: Games[] = new Array<Games>();
+    this.adminService.searchGamesInDb().subscribe(games => {
+      gamesList = games;
+      let gameFound;
+      this.formGroup.value.selection.forEach(elt => {
+        gameFound = gamesList.find(game => game._id === elt._id);
+      });
+      if (gameFound === undefined) {
+        this.games$ = this.adminService.addGame(this.formGroup).pipe(map(gamesReturned => gamesReturned));
+        this.loading = false;
+      } else {
+        this.message = 'Game already exists in our database';
+        this.loading = false;
+      }
     });
+    // TODO Add a feature to display added games and already existing ones in the view.
+    // this.adminService.addGame(this.formGroup).subscribe(res => {
+    //   this.searchGames();
+    //   this.loading = false;
+    // });
   }
 
   customSearchFn(term: string, item: any) {
@@ -62,6 +78,9 @@ export class GamesComponent implements OnInit {
   ngOnInit() {
     this.games$ = this.adminService.searchGamesInDb().pipe(map(games => games));
     this.categories$ = this.adminService.getCategories().pipe(map(categories => categories));
+    this.categories$.subscribe(res => {
+      console.log(res);
+    })
     this.formGroup = new FormGroup({
       selection: new FormControl('', Validators.required),
       categorySelection: new FormControl('', Validators.required)

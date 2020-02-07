@@ -141,8 +141,6 @@ exports.addGame = async function (req, res) {
     let arraySuccess = [];
     let countSuccess = 0;
     const game = req.body.gamesForm;
-    console.log(game);
-    console.log(req.body.gamesForm);
     if (game !== "") {
       const db = db_connect();
       db.on('error', function (err) {
@@ -153,38 +151,24 @@ exports.addGame = async function (req, res) {
         const gameToSeek = game.selection;
         const categoryToSeek = game.categorySelection;
 
-        if (gameToSeek){
-          gameToSeek.forEach(game => {
-            const docs = collection.find({title: game.title}).toArray(function (err, doc) {
-              console.log(game);
-              if (doc.length >= 1) {
-                res.send({
-                  message: 'Game already exists in our database',
-                  status: 204,
-                  game: doc
-                });
-                arrayErrors.push(doc);
-              } else {
-                const Games = mongoose.model('games', gamesSchema);
-                const newGame = new Games({
-                  title: game.title,
-                  categoryName: categoryToSeek[0].categoryName
-                });
-                newGame.save(function (err) {
-                  if (err){
-                    countSuccess--;
-                    console.log(err);
-                  }
-                  else {
-                    countSuccess++;
-                    arraySuccess.push(game);
-                  }
-                })
-              }
-            })
+        if (gameToSeek) {
+          console.log(gameToSeek);
+          const Games = mongoose.model('games', gamesSchema);
+          console.log(categoryToSeek);
+          const newGame = new Games({
+            title: gameToSeek[0].title,
+            categoryName: categoryToSeek
           });
+          newGame.save(function (err) {
+            if (err) {
+              countSuccess--;
+              console.log(err);
+            } else {
+              gamess.getGames(req, res);
+            }
+          })
         }
-        returnErrors(res, arraySuccess, arrayErrors, 'added');
+        // returnErrors(res, arraySuccess, arrayErrors, 'added');
       });
     }
   } catch (e) {

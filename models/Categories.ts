@@ -1,4 +1,5 @@
 export class Categories {
-  name: string;
+  _id: string;
+  categoryName: string;
   picture: string;
 }
