@@ -1,0 +1,22 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+  <ng-select class="custom"
+             notFoundText="No category found"
+             formControlName="selection"
+             addTag="true"
+             [loading]="loading"
+             loadingText="Please wait..."
+             [items]="categories$ | async"
+             bindLabel="categoryName"
+             [searchFn]="customSearchFn"
+             placeholder="Search games"
+             multiple="true">
+    <ng-template ng-option-tmp let-item="item" let-item$="item$">
+      {{item.categoryName}}
+      <span class="items-title-trash" (click)="deleteCategory(item._id)">
+        <img src="../../assets/icons/common/delete.svg" alt="Delete game">
+      </span>
+    </ng-template>
+  </ng-select>
+  <p>{{message}}</p>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
