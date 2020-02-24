@@ -36,7 +36,7 @@
 
           <h4>Categories</h4>
           <div class="categoriesRadio">
-            <div class="cat-radio-btn" *ngFor="let category of categories$ | async">
+            <div class="cat-radio-btn" *ngFor="let category of categoriesArray">
               <input id="{{category._id}}" type="radio" formControlName="categorySelection" value="{{category.categoryName}}">
               <label for="{{category._id}}">{{category.categoryName}}</label>
             </div>

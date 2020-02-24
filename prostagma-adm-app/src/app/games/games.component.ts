@@ -5,6 +5,8 @@ import {Subject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Games} from '../../../../models/Games';
 import {Categories} from '../../../../models/Categories';
+import {CategoriesComponent} from '../categories/categories.component';
+import {ChatService} from '../services/chat.service';
 
 enum gamesSelection {
   boundLabel = 'title',
@@ -16,19 +18,23 @@ enum gamesSelection {
   selector: 'app-admin',
   templateUrl: './games.component.html',
   styleUrls: ['./games.component.scss'],
+  providers: [CategoriesComponent]
 })
 export class GamesComponent implements OnInit {
-
-  private message: string;
-  constructor(public adminService: HomeService) {
-  }
 
   obsDeletion: Subject<Games[]> = new Subject<Games[]>();
   private games$: Observable<Games[]>;
   private loading = false;
   private categories$: Observable<Categories[]>;
+  private categoriesArray: Categories[];
   private formGroup: FormGroup;
-
+  private message: string;
+  constructor(public adminService: HomeService, private categories: CategoriesComponent, private chatService: ChatService) {
+    this.categories$ = categories.categories$;
+    // this.chatService.getData('msgReceived').subscribe(games => {
+    //   this.games$ = games.pipe(map(gamess => gamess));
+    // });
+  }
   searchGames() {
     this.games$ = this.adminService.searchGamesInDb().pipe(map(games => {
       return games;
@@ -76,8 +82,13 @@ export class GamesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.chatService.getData('msgReceived').subscribe(categories => {
+      this.categoriesArray = categories;
+    });
     this.games$ = this.adminService.searchGamesInDb().pipe(map(games => games));
-    this.categories$ = this.adminService.getCategories().pipe(map(categories => categories));
+    this.adminService.getCategories().subscribe(categories => {
+      this.categoriesArray = categories;
+    });
     this.formGroup = new FormGroup({
       selection: new FormControl('', Validators.required),
       categorySelection: new FormControl('', Validators.required)

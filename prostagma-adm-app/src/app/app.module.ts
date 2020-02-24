@@ -12,7 +12,9 @@ import {HeaderComponent} from './header/header.component';
 import {AuthService} from './services/auth.service';
 import {ProfileComponent} from './profile/profile.component';
 import {CategoriesComponent} from './categories/categories.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
+const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +30,7 @@ import {CategoriesComponent} from './categories/categories.component';
     HttpClientModule,
     ReactiveFormsModule,
     NgSelectModule,
+    SocketIoModule.forRoot(config),
   ],
   providers: [HomeService, AuthService],
   bootstrap: [AppComponent]

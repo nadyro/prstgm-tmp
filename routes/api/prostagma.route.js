@@ -46,4 +46,5 @@ router.get('/db/admin/getCategories', DbCategoriesController.getCategories);
 router.post('/db/admin/addCategories', DbCategoriesController.addCategories);
 router.post('/db/admin/addGame', DbGamesAdminController.addGame);
 router.delete('/db/admin/deleteGame/:id', DbGamesAdminController.deleteGame);
+router.delete('/db/admin/deleteCategory/:id', DbCategoriesController.deleteCategories);
 module.exports = router;

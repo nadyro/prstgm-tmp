@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const sockets = require('./sockets/sockets');
 
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
@@ -20,8 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/api', api);
-http.listen(3001, function(request, response) {
+server.listen(3001, function(request, response) {
     console.log('server is running');
 });
-
+sockets(server, '');
 module.exports = app;

@@ -18,7 +18,7 @@ function db_connect() {
   return (db);
 }
 
-function returnErrors(res, arraySuccess, arrayErrors, verb) {
+exports.returnErrors = async function (res, arraySuccess, arrayErrors, verb) {
   let message = '';
   let status = 0;
   if (arrayErrors.length > 0 && arraySuccess.length > 0) {
@@ -132,7 +132,7 @@ exports.deleteGame = async function (req, res) {
         const docs = collection.deleteOne({_id: ObjectId(gameId)}, function (err, data) {
           if (err) {
             errorList.push(err);
-            returnErrors(res, successList, errorList, 'deleted');
+            module,exports.returnErrors(res, successList, errorList, 'deleted');
           } else {
             successList.push(data);
             module.exports.getGames(req, res);

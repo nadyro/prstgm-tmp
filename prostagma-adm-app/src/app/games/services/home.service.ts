@@ -38,6 +38,15 @@ export class HomeService {
         return categories;
       }));
   }
+  deleteCategory(categoryId): Observable<Categories[]> {
+    if (categoryId) {
+      return this.http.delete<Categories[]>(this.prostagmaApiUrl + '/db/admin/deleteCategory/' + categoryId).pipe(
+        map(categories => {
+          return categories;
+        }
+      ));
+    }
+  }
 
   searchGamesInDb(id?: string, games?: Observable<Games[]>): Observable<Games[]> {
     if (id) {

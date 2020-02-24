@@ -8,7 +8,7 @@
              [items]="categories$ | async"
              bindLabel="categoryName"
              [searchFn]="customSearchFn"
-             placeholder="Search games"
+             placeholder="Search categories"
              multiple="true">
     <ng-template ng-option-tmp let-item="item" let-item$="item$">
       {{item.categoryName}}
