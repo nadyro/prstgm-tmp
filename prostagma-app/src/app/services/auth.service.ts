@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {environment} from '../../environments/environment';
+import {environment} from '../../environments/environment.prod';
 import {Users} from '../../../../models/Users';
 
 (window as any).global = window;
