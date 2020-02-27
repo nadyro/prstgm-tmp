@@ -1,0 +1,7 @@
+<div class="displayed-cr" *ngIf="crDisplayed">
+  <ng-container *ngFor="let chatRequest of chatRequests">
+    <div class="cr-click" (click)="joinRoom(chatRequest)">
+      <p>{{chatRequest.requester.username}} - {{chatRequest.creationDate | date}}</p>
+    </div>
+  </ng-container>
+</div>
