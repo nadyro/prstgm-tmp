@@ -18,8 +18,8 @@ export class AdminComponent implements OnInit {
 
   }
 
-  private games$: Observable<Games[]>;
-  private categories$: Observable<Categories[]>;
+  public games$: Observable<Games[]>;
+  public categories$: Observable<Categories[]>;
   message = 'Ceci est un test';
   formGroup;
   gameCategories;

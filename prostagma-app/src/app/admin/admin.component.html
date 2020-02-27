@@ -59,7 +59,7 @@
         </ng-template>
         <!--        <input #searchGamesInput type="text" class="form-control" value="" (keyup)="searchGames(searchGamesInput)">-->
         <p class="server_message">{{message}}</p>
-        <div class="games_list" *ngFor="let game of games">
+        <div class="games_list" *ngFor="let game of games$ | async">
           <p #gameInfo (click)="deleteGame(gameInfo, game._id)">{{game.title}}</p>
         </div>
       </div>

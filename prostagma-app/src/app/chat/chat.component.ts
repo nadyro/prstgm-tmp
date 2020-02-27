@@ -15,18 +15,18 @@ import {NgxSpinnerService} from "ngx-spinner";
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  private users$: Observable<Users[]>;
-  private selectedUser: Users;
-  private messages: Message[];
-  private activeChatRequest: number;
-  private chatRequests: ChatRequests[];
-  private crDisplayed: boolean;
-  private clickCounter = 0;
-  private welcomeMessage = '';
-  private statusMessage = '';
+  public users$: Observable<Users[]>;
+  public selectedUser: Users;
+  public messages: Message[];
+  public activeChatRequest: number;
+  public chatRequests: ChatRequests[];
+  public crDisplayed: boolean;
+  public clickCounter = 0;
+  public welcomeMessage = '';
+  public statusMessage = '';
 
   constructor(private chatService: ChatService,
-              private authService: AuthService,
+              public authService: AuthService,
               private usersService: UsersService,
               private spinner: NgxSpinnerService) {
     this.users$ = this.usersService.getUsersExceptCurrent().pipe(map(users => users));
