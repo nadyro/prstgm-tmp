@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HomeService} from '../games/services/home.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
@@ -19,6 +19,7 @@ export class CategoriesComponent implements OnInit {
   private message: string;
   private socket;
   public categories$: Observable<Categories[]>;
+
   constructor(private homeService: HomeService, private chatService: ChatService) {
   }
 
@@ -26,9 +27,14 @@ export class CategoriesComponent implements OnInit {
     term = term.toLowerCase();
     return item.categoryName.toLowerCase().indexOf(term) > -1;
   }
+
   deleteCategory(id) {
-    this.categories$ = this.homeService.deleteCategory(id).pipe(map(categories => categories));
+    this.categories$ = this.homeService.deleteCategory(id).pipe(map(categories => {
+      this.chatService.sendData(categories);
+      return categories;
+    }));
   }
+
   onSubmit() {
     this.loading = true;
     let categoryList: Categories[] = new Array<Categories>();
@@ -56,6 +62,7 @@ export class CategoriesComponent implements OnInit {
       }
     });
   }
+
   ngOnInit() {
     this.chatService.getData('msgReceived').subscribe(message => console.log(message));
     this.chatService.getData('simpleMessage').subscribe(message => console.log(message.content));

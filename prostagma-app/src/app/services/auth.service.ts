@@ -5,6 +5,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
+import {Users} from '../../../../models/Users';
 
 (window as any).global = window;
 
@@ -21,7 +22,7 @@ export class AuthService {
 
   expiresAt: number;
   isAdminBool: number;
-  userProfile: any = {};
+  userProfile: Users = new Users();
   accessToken: string;
   authenticated: boolean;
 
@@ -49,7 +50,6 @@ export class AuthService {
   getUserInfos(authResult) {
     this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
       if (profile) {
-        console.log(profile);
         this._setSession(authResult, profile);
       }
     });

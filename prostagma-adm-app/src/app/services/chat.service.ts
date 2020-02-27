@@ -14,9 +14,8 @@ export class ChatService {
   private socket;
   private dataObservable: Observable<Message>;
   constructor(private http: HttpClient) {
-    const options =  {transports: ['websocket']};
-    this.socket = io.connect('http://localhost:3001');
-    this.socket.on('init', (data) => {
+    this.socket = io.connect('http://localhost:3001/categories');
+    this.socket.on('initCategories', (data) => {
       console.log(data);
     });
   }
@@ -29,7 +28,7 @@ export class ChatService {
   public sendData(objs: Categories[]): void {
     let categories: Categories[];
     categories = objs;
-    this.socket.emit('simpleMessage', categories);
+    this.socket.emit('updateCategories', categories);
   }
   public sendMessage(message: string): void {
     const newMessage = new Message();

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObjectId = require('mongodb').ObjectID;
 
 function db_connect() {
     mongoose.connect('mongodb://localhost/prostagma', { useNewUrlParser: true });
@@ -74,6 +75,42 @@ exports.getUserByEmail = async function (req, res) {
         throw Error(e);
     }
 };
+exports.getUserById = async function (req, res) {
+  try {
+    // console.log('ICIIII')
+    // console.log(req);
+    const db = db_connect();
+    db.on('error', function (err) {
+      console.error(err);
+    });
+    db.once('open', function () {
+      const collection = db.collection('users');
+      collection.findOne({_id: ObjectId(req.query.id)}, function (err, doc) {
+        // console.log('wsh');
+        if (doc) {
+          if (res)
+            return res.send(doc);
+          else
+            return (doc);
+        } else {
+          if (res) {
+            return (res.status(400).json({
+              status: 400,
+              message: 'Something went wrong'
+            }));
+          } else {
+            return ({
+              status: 400,
+              message: 'Something went wrong'
+            })
+          }
+        }
+      });
+    })
+  } catch (e) {
+    throw Error(e);
+  }
+}
 exports.getUsers = async function (req, res) {
     try {
       const db = db_connect();

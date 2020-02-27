@@ -37,6 +37,7 @@ router.post('/profile/getSummoner', profileController.getSummoner);
 router.post('/db/saveUser', DbUserController.saveUser);
 router.post('/db/getUserByEmail', DbUserController.getUserByEmail);
 router.post('/db/connect', DbUserController.connect);
+router.post('/db/getUsersById', DbUserController.getUserById);
 router.get('/db/getUsers', DbUserController.getUsers);
 router.get('/db/getGames', DbGamesController.getGames);
 

@@ -27,7 +27,7 @@ const appRoutes: Routes = [
   {path: 'teams', component: TeamsComponent, canActivate: [AuthGuard]},
   {path: 'ladder', component: LadderComponent, canActivate: [AuthGuard]},
   {path: 'find', component: FindTeamComponent, canActivate: [AuthGuard]},
-  {path: 'chat', component: ChatComponent},
+  {path: 'chat', component: ChatComponent, canActivate: [AuthGuard]},
   {path: 'news', component: NewsComponent, canActivate: [AuthGuard]},
   {path: 'media', component: MediaComponent},
   {path: 'callback', component: CallbackComponent},

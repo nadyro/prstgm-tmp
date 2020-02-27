@@ -29,7 +29,9 @@ import {TeamsService} from './services/teams.service';
 import {GamesService} from './services/games.service';
 import {LeagueSummonerService} from './services/lol/leagueSummoner.service';
 import {AdminService} from './admin/services/admin.service';
-
+import {ChatRequestsComponent} from './chat-requests/chat-requests.component';
+import {NgxSpinnerModule} from 'ngx-spinner';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import {AdminService} from './admin/services/admin.service';
     AuthLoginComponent,
     ProfileComponent,
     AdminComponent,
+    ChatRequestsComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,8 @@ import {AdminService} from './admin/services/admin.service';
     HttpClientModule,
     ReactiveFormsModule,
     NgSelectModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     AuthService,

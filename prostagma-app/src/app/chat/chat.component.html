@@ -1,19 +1,80 @@
 <div class="chat-page col-md-11 col-sm-11">
   <h3>Messenger</h3>
   <div class="messenger-container container">
+    <div class="user-finder">
+      <ng-select class="custom"
+                 notFoundText="No user found"
+                 [addTag]="false"
+                 loadingText="Please wait..."
+                 [items]="users$ | async"
+                 bindLabel="username"
+                 (change)="selectUser($event)"
+                 placeholder="Type a username to start a conversation"
+                 multiple="false">
+      </ng-select>
+    </div>
     <div class="left-panel panels col-3">
-      <h4>Users online</h4>
+      <div class="profile-container container">
+        <div class="profile-details">
+          <div class="img-profile-details">
+            <img #imgRequesterDetails (mouseenter)="displayOverlay(imgRequesterDetails, 1)"
+                 src="../../assets/images/bg/belowsky.jpg" alt="My Profile Picture">
+            <div class="text-profile-details" (mouseleave)="displayOverlay(imgRequesterDetails, 0)">
+              <div class="user-details">
+                <p>{{selectedUser.name}}</p>
+                <p>{{selectedUser.surname}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="borders left"></div>
-      <ng-container *ngFor="let user of users$ | async">
-        <p>{{user.username}}</p>
-      </ng-container>
     </div>
     <div class="middle-panel panels col-6">
       <div class="borders right"></div>
+      <div class="messages">
+        <p>{{statusMessage}}</p>
+        <p>{{welcomeMessage}}</p>
+        <ngx-spinner bdColor="rgba(0,0,0,0.5)"
+                     size="medium"
+                     color="#fff"
+                     type="ball-scale-multiple"></ngx-spinner>
+        <ng-container *ngFor="let message of messages">
+          <p>{{message.content}}</p>
+        </ng-container>
+      </div>
       <div class="borders left"></div>
     </div>
     <div class="right-panel panels col-3">
-      <h4>My profile</h4>
+      <div class="profile-container container">
+        <div #cr class="cr">
+          <div class="dot-online" *ngIf="activeChatRequest > 0"></div>
+          <p (click)="displayCR(cr)">Whispers</p>
+          <app-chat-requests class="app-chat-requests" (selectedChat)="getSelectedUsers($event)"
+                             (resized)="resizeCr($event, cr)"
+                             [chatRequests]="chatRequests"
+                             [crDisplayed]="crDisplayed">
+          </app-chat-requests>
+        </div>
+        <div class="profile-details">
+          <div class="img-profile-details">
+            <img #imgDetails (mouseenter)="displayOverlay(imgDetails, 1)" src="../../assets/images/travel_by_air.jpg"
+                 alt="My Profile Picture">
+            <div class="text-profile-details" (mouseleave)="displayOverlay(imgDetails, 0)">
+              <div class="user-details">
+                <p>{{authService.userProfile.name}}</p>
+                <p>{{authService.userProfile.surname}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-container">
+        <textarea placeholder="Type a message">
+
+        </textarea>
+          <button #sendBtn type="submit" (click)="sendSimpleMessage(sendBtn)">Send</button>
+        </div>
+      </div>
       <div class="borders right"></div>
     </div>
   </div>

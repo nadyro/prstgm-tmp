@@ -82,7 +82,7 @@ export class GamesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.chatService.getData('msgReceived').subscribe(categories => {
+    this.chatService.getData('categories').subscribe(categories => {
       this.categoriesArray = categories;
     });
     this.games$ = this.adminService.searchGamesInDb().pipe(map(games => games));
