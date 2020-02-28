@@ -124,7 +124,7 @@ export class AuthService {
   saveUser(formGroup): Observable<any> {
     console.log(formGroup);
     return (this.http.post(this.prostagmaApiUrl + '/db/saveUser', formGroup).pipe(map(res => {
-      console.log(res);
+      return res;
     })));
   }
 
