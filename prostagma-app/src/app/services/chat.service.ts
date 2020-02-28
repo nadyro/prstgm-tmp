@@ -30,6 +30,9 @@ export class ChatService {
       this.socket.disconnect();
     }
     this.socket = io.connect('http://prostagma.fr/chat');
+    this.socket.on('init', (data) => {
+      console.log(data);
+    })
     this.socketMessageManager('roomCreated').then(s1 => {
       if (this.authService.userProfile._id === s1.requester._id) {
         setTimeout(() => {
