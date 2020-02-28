@@ -33,11 +33,6 @@ export class AuthService {
   apiUrl = 'http://prostagma.fr';
   prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
 
-  // private handleError(err: HttpErrorResponse | any) {
-  //   console.error('An error occurred', err);
-  //   return throwError(err.message || err);
-  // }
-
   private _setSession(authResult, profile) {
     console.log(authResult);
     this.expiresAt = authResult.authResults.expiresIn * 1000 + Date.now();
@@ -78,11 +73,6 @@ export class AuthService {
     });
   }
 
-  // login() {
-  //   console.log(this.auth0);
-  //   this.auth0.authorize();
-  // }
-
   logout() {
     this.auth0.logout({
       returnTo: environment.auth.auth0ReturnTo,
@@ -112,33 +102,14 @@ export class AuthService {
     );
   }
 
-  connect(): Observable<any> {
-    console.log('Auth service landed');
-    console.log(this.prostagmaApiUrl);
-    return (this.http.get(this.prostagmaApiUrl + '/connect').pipe(map(res => {
-        console.log(res);
-      })
-    ));
-  }
-
   saveUser(formGroup): Observable<any> {
-    console.log(formGroup);
     return (this.http.post(this.prostagmaApiUrl + '/db/saveUser', formGroup).pipe(map(res => {
       return res;
     })));
   }
 
-  // subscribe(formGroup): Observable<any> {
-  //   console.log(formGroup);
-  //   return (this.http.post(this.prostagmaApiUrl + '/subscribe', formGroup).pipe(map(res => {
-  //     console.log(res);
-  //   })));
-  // }
-
   log(formGroup): Observable<any> {
-    console.log(formGroup);
     return (this.http.post(this.prostagmaApiUrl + '/db/connect', formGroup).pipe(map(res => {
-      console.log(res);
       this._setSession(res, res['authResults'].user);
       this.router.navigate(['/']).then((callback) => {
         console.log('Navigated to : ' + callback);

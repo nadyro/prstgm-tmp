@@ -3,29 +3,8 @@
     <h4>First connection ?</h4>
     <h5>Subscribe and start to enjoy gaming in real life !</h5>
     <div class="form_errors">
-      <div
-        *ngIf="(name.invalid && (name.touched || name.dirty)) || (surname.invalid && (surname.touched || surname.dirty))"
-        class="form_error">
-        <h6>Warning! Your attention is required here!</h6>
-        <div>
-          Don't go Rogue, we need to identify our next Super star !
-        </div>
-        <div *ngIf="(name.invalid && name.errors.pattern) || (surname.invalid && surname.errors.pattern)">
-          As Cyborgs don't exist yet, (questionnable, we agree), please use only Letters for your Name and Last Name.
-        </div>
-      </div>
-      <div *ngIf="email.invalid" class="form_error">
-        <h6>Warning! Your attention is required here!</h6>
-        <div *ngIf="email.errors.email">
-          As contacting you will be a critical process for your experience here, we kindly demand that you provide a
-          valid Email Address.
-        </div>
-      </div>
       <div *ngIf="password.invalid" class="form_error">
         <h6>Warning! Your attention is required here!</h6>
-        <div *ngIf="password.invalid && password.touched">
-          You don't want anybody to get into your account, right ?
-        </div>
         <div *ngIf="password.invalid && password.errors.pattern">
           <ul>
             Your password must follow these prerequesites :
@@ -48,78 +27,9 @@
           </ul>
         </div>
       </div>
-      <div *ngIf="birthday.invalid && (birthday.touched || birthday.dirty)" class="form_error">
-        <h6>Warning! Your attention is required here!</h6>
-        <div>
-          Oh come on... ! Everybody has to say it !
-        </div>
-      </div>
-      <div *ngIf="gender.invalid && (gender.touched || gender.dirty)" class="form_error">
-        <h6>Warning! Your attention is required here!</h6>
-        <div>
-          The critical point regarding the success of an application is the way it serves its users. Knowing our users's
-          gender is
-          entirely part of it.
-        </div>
-      </div>
-      <div *ngIf="gender_specified.invalid && (gender_specified.touched || gender_specified.dirty)" class="form_error">
-        <h6>Warning! Your attention is required here!</h6>
-        <div *ngIf="gender_specified.invalid && gender_specified.errors.pattern">
-          Please use only letters to describe your gender.
-        </div>
-      </div>
-      <div *ngIf="genderValidator == 2">
-        <h6>Warning! Your attention is required here!</h6>
-        The critical point regarding the success of an application is the way it serves its users. Knowing our users's
-        gender is
-        entirely part of it.
-      </div>
-      <div *ngIf="address.invalid && address.errors.pattern" class="form_error">
-        <h6>Warning! Your attention is required here!</h6>
-        <div *ngIf="address.invalid && address.errors.pattern">
-          Please enter a valid address. Don't worry, we're not into swatting.
-        </div>
-      </div>
-      <div *ngIf="zip.invalid  && zip.errors.pattern" class="form_error">
-        <h6>Warning! Your attention is required here!</h6>
-        <div *ngIf="zip.invalid && zip.errors.pattern">
-          Come on... the Zip Code must be only numbers. Everybody knows that for lord's sake.
-        </div>
-      </div>
-      <div *ngIf="city.invalid  && city.errors.pattern" class="form_error">
-        <h6>Warning! Your attention is required here!</h6>
-        <div *ngIf="city.invalid && city.errors.pattern">
-          Human ! Have you ever seen a city name with such characters ?!
-        </div>
-      </div>
-      <div *ngIf="username.invalid && (username.touched || username.dirty)" class="form_error">
-        <h6>Warning! Your attention is required here!</h6>
-        Ok, focus please. We know that you may want to use every bit of your genius brain to design an incredibly
-        elaborated username...
-        Okay ? We know it. You should also know that there is a very special place for people who choose
-        <b>
-          <i>too elaborated usernames</i>
-        </b>.
-        <div *ngIf="username.invalid && username.errors.pattern">
-          Dear future hell dweller, you just tried a combination of characters that we specifically banned. You shall
-          try again.
-        </div>
-      </div>
     </div>
-    <form [formGroup]="authSubscribeForm" (ngSubmit)="onSubmit(1)">
+    <form [formGroup]="authSubscribeForm" (ngSubmit)="onSubmit()">
       <div class="first_part col-md-5 col-sm-5">
-        <div class="form-group identity col-md-12 col-sm-12">
-          <label class="">
-            First Name :
-            <input type="text" formControlName="name" class="form-control auth_child">
-          </label>
-        </div>
-        <div class="form-group">
-          <label class="">
-            Last Name :
-            <input type="text" formControlName="surname" class="form-control auth_child">
-          </label>
-        </div>
         <div class="form-group">
           <label>
             Email :
@@ -132,75 +42,6 @@
             Password :
             <input formControlName="password" class="form-control auth_child">
           </label>
-
-        </div>
-        <div class="form-group">
-          <label class="birthday_label">
-            Birthday :
-            <input type="date" formControlName="birthday" class="form-control auth_child">
-            <div *ngIf="tooltipValidator" class="hover_symbol" (mouseenter)="display_tooltip($event)"
-                 (mouseleave)="hide_tooltip($event)">
-              <p>?</p>
-            </div>
-            <div class="hover">{{formattedMessage}}</div>
-          </label>
-        </div>
-      </div>
-      <div class="mid_part col-md-1 col-sm-1"></div>
-      <div class="second_part col-md-5 col-sm-5">
-        <ng-select #dd class="custom"
-                   [items]="items"
-                   bindLabel="name"
-                   placeholder="Select Gender"
-                   appendTo=".second_part"
-                   multiple="true"
-                   searchable="true"
-                   (add)="displaySelected($event)">
-
-        </ng-select>
-        <div class="form-group">
-          <label>
-            Gender :
-            <select #gender_value formControlName="gender" class="form-control auth_child"
-                    (change)="specifyGender($event)">
-              <option value="1">
-                Female
-              </option>
-              <option value="2">
-                Male
-              </option>
-              <option value="3">
-                Other (Please Specify)
-              </option>
-              <option value="4">
-                I prefer not to say.
-              </option>
-            </select>
-            <div *ngIf="genderValidator == 1">
-              <label>
-                Please specify your gender :
-                <input type="text" formControlName="gender_specified" class="form-control auth_child">
-              </label>
-            </div>
-          </label>
-        </div>
-        <div class="form-group">
-          <label>
-            Address :
-            <input type="text" formControlName="address" class="form-control auth_child">
-          </label>
-        </div>
-        <div class="form-group">
-          <label>
-            Zip Code :
-            <input type="text" formControlName="zip" class="form-control auth_child">
-          </label>
-        </div>
-        <div class="form-group">
-          <label>
-            City :
-            <input type="text" formControlName="city" class="form-control auth_child">
-          </label>
         </div>
         <div class="form-group">
           <label>
@@ -209,9 +50,6 @@
           </label>
         </div>
       </div>
-      <!-- <p>
-          Form Value : {{authSubscribeForm.value.username}} Form status : {{authSubscribeForm.status}}
-      </p> -->
       <button type="submit" class="btn btn-primary auth_submit">Submit</button>
     </form>
     <div class="to_login">
