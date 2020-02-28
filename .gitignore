@@ -9,6 +9,8 @@
 
 # dependencies
 node_modules
+prostagma-app
+prostagma-adm-app
 prostagma-app/node_modules
 prostagma-adm-app/node_modules
 data/
