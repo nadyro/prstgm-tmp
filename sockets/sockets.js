@@ -1,6 +1,6 @@
 const socketIo = require('socket.io');
 const request = require('request');
-const urlUserController = 'http://localhost:8081/api/prostagmaApi/db/getUsersById';
+const urlUserController = 'http://prostagma.fr/api/prostagmaApi/db/getUsersById';
 
 let storedClients = [];
 let user;

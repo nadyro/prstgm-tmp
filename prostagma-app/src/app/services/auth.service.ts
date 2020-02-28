@@ -16,7 +16,7 @@ export class AuthService {
     domain: environment.auth.domain,
     responseType: 'token',
     redirectUri: environment.auth.auth0RedirectUri,
-    audience: 'http://localhost:8081',
+    audience: 'http://prostagma.fr',
     scope: 'openid profile email'
   });
 
@@ -30,7 +30,7 @@ export class AuthService {
     this.getAccessToken();
   }
 
-  apiUrl = 'http://localhost:8081';
+  apiUrl = 'http://prostagma.fr';
   prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
 
   // private handleError(err: HttpErrorResponse | any) {

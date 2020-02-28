@@ -13,7 +13,7 @@ export class UsersService {
   readonly prostagmaApiUrl: string;
 
   constructor(private httpClient: HttpClient, private authService: AuthService) {
-    this.apiUrl = 'http://localhost:8081';
+    this.apiUrl = 'http://prostagma.fr';
     this.prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
   }
 

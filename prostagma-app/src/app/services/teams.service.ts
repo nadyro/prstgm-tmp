@@ -13,7 +13,7 @@ export class TeamsService {
 
     }
 
-  api_url = "http://localhost:8081";
+  api_url = "http://prostagma.fr";
     prostagma_api_url = `${this.api_url}/api/prostagmaApi`;
     getUsers(){
         return (this.http.get(this.prostagma_api_url + '/db/getUsers').pipe(map(res => {

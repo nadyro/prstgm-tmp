@@ -13,7 +13,7 @@ export class ProfileService {
 
     }
 
-  api_url = "http://localhost:8081";
+  api_url = "http://prostagma.fr";
     prostagma_api_url = `${this.api_url}/api/prostagmaApi`;
 
   getUser(userCredentials): Observable<any> {

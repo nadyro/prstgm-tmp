@@ -24,12 +24,12 @@ export class ChatService {
   public emitStatusMessage: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private httpClient: HttpClient, private authService: AuthService) {
-    this.apiUrl = 'http://localhost:8081';
+    this.apiUrl = 'http://prostagma.fr';
     this.prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
     if (this.socket) {
       this.socket.disconnect();
     }
-    this.socket = io.connect('http://localhost:8081/chat');
+    this.socket = io.connect('http://prostagma.fr/chat');
     this.socketMessageManager('roomCreated').then(s1 => {
       if (this.authService.userProfile._id === s1.requester._id) {
         setTimeout(() => {

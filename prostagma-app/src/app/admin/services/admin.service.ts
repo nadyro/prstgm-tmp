@@ -12,7 +12,7 @@ export class AdminService {
   constructor(private http: HttpClient) {
   }
 
-  apiUrl = 'http://localhost:8081';
+  apiUrl = 'http://prostagma.fr';
   prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
 
   addGame(gameForm: FormGroup): Observable<ResponseReturn> {
