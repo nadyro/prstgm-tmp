@@ -18,6 +18,7 @@ app.use('/api', api);
 app.use(express.static(__dirname + '/dist/prostagma'));
 server.listen(8081, function (request, response) {
   console.log('server is running');
+  console.log('ok');
 });
 sockets(server, '');
 module.exports = app;
