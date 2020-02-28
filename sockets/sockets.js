@@ -49,6 +49,7 @@ module.exports = function (server, usersId) {
   const categoriesSocketHandler = io.of('/categories');
   const chatSocketHandler = io.of('/chat');
   io.on('connection', function (socket) {
+    console.log('here');
     socket.emit('init', {
       message: 'Sockets are listening.'
     });
