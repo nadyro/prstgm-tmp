@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/api', api);
-server.listen(3001, function(request, response) {
+server.listen(8081, function (request, response) {
     console.log('server is running');
 });
 sockets(server, '');

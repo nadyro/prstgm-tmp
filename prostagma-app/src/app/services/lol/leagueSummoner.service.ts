@@ -9,8 +9,8 @@ import { environment } from '../../../environments/environment';
 
 (window as any).global = window;
 @Injectable()
-export class LeagueSummonerService { 
-    api_url = "http://localhost:3001";
+export class LeagueSummonerService {
+  api_url = "http://localhost:8081";
     prostagma_api_url = `${this.api_url}/api/prostagmaApi`;
 
     constructor(private http: HttpClient){

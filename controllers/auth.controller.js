@@ -10,7 +10,7 @@ exports.authCheck = jwt({
         jwksRequestsPerMinute: 5,
         jwksUri: "https://prostagma.eu.auth0.com/.well-known/jwks.json"
     }),
-    audience: "http://localhost:3001",
+  audience: "http://localhost:8081",
     issuer: "https://prostagma.eu.auth0.com/",
     algorithms: ['RS256']
 });

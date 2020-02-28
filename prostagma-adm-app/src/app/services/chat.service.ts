@@ -14,7 +14,7 @@ export class ChatService {
   private socket;
   private dataObservable: Observable<Message>;
   constructor(private http: HttpClient) {
-    this.socket = io.connect('http://localhost:3001/categories');
+    this.socket = io.connect('http://localhost:8081/categories');
     this.socket.on('initCategories', (data) => {
       console.log(data);
     });

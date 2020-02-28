@@ -11,7 +11,7 @@ export class HomeService {
   constructor(private http: HttpClient) {
   }
 
-  apiUrl = 'http://localhost:3001';
+  apiUrl = 'http://localhost:8081';
   prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
 
   addGame(gameForm: FormGroup): Observable<Games[]> {

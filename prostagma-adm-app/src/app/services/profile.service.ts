@@ -12,7 +12,8 @@ export class ProfileService {
     constructor(private http: HttpClient){
 
     }
-    api_url = "http://localhost:3001";
+
+  api_url = "http://localhost:8081";
     prostagma_api_url = `${this.api_url}/api/prostagmaApi`;
 
     getUser(userCredentials):Observable<any>{
