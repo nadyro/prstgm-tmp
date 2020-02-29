@@ -1,12 +1,11 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Users} from '../../../../models/Users';
-import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Message} from '../../../../models/Message';
 import * as io from 'socket.io-client';
 import {AuthService} from './auth.service';
 import {ChatRequests} from '../../../../models/ChatRequests';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,22 +16,21 @@ export class ChatService {
   readonly apiUrl: string;
   readonly prostagmaApiUrl: string;
   private dataObservable: Observable<Message>;
-  public connectionStatus: Observable<string>;
   public chatRequest: Observable<ChatRequests> = new Observable<ChatRequests>();
   public isFulfilled: Observable<ChatRequests> = new Observable<ChatRequests>();
   public welcome: Observable<any> = new Observable<any>();
   public emitStatusMessage: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private httpClient: HttpClient, private authService: AuthService) {
-    this.apiUrl = 'http://prostagma.fr';
+    this.apiUrl = environment.apiUrl;
     this.prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
     if (this.socket) {
       this.socket.disconnect();
     }
-    this.socket = io.connect('http://prostagma.fr/chat');
+    this.socket = io.connect('http://localhost:8081/chat');
     this.socket.on('init', (data) => {
       console.log(data);
-    })
+    });
     this.socketMessageManager('roomCreated').then(s1 => {
       if (this.authService.userProfile._id === s1.requester._id) {
         setTimeout(() => {
@@ -51,12 +49,6 @@ export class ChatService {
       if (this.authService.userProfile._id === s3.requester._id) {
         this.emitStatusMessage.emit('Welcome ' + s3.recipient.username + ' !');
       }
-    });
-  }
-
-  callbackSocket(data): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      console.log(data);
     });
   }
 
@@ -88,9 +80,6 @@ export class ChatService {
   public checkFulfilled(): Observable<ChatRequests> {
     return this.isFulfilled = new Observable<ChatRequests>(chatRequest => {
       this.socket.on('fulfill', (cr: ChatRequests) => {
-        // if (this.authService.userProfile._id === cr.requester._id) {
-        //   this.emitStatusMessage.emit('Waiting for ' + cr.recipient.username + ' to join the room');
-        // }
         chatRequest.next(cr);
       });
     });

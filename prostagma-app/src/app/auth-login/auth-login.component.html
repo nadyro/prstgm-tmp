@@ -1,6 +1,7 @@
 <div class="auth col-md-11 col-sm-11">
     <div class="auth_children login col-md-5 col-sm-5">
         <h5>Log in to continue your adventure !</h5>
+      <p>{{message}}</p>
         <form [formGroup]="authLoginForm" (ngSubmit)="onSubmit(2)">
             <div class="form-group">
                 <label>
@@ -19,7 +20,7 @@
         <div class="to_subscribe">
             <p>
                 First time among us ?
-                <a #login routerLink="/auth" *ngIf="!authService.isLoggedIn" routerLinActive="active">Sign up</a>
+              <a #login routerLink="/auth" *ngIf="!authService.isLoggedIn">Sign up</a>
             </p>
         </div>
     </div>

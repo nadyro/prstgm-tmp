@@ -1,27 +1,25 @@
-import { Injectable } from '@angular/core';
-import * as auth0 from 'auth0-js';
-import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { throwError, Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { FormGroup } from '@angular/forms';
-import { environment } from '../../../environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
 
 (window as any).global = window;
+
 @Injectable()
 export class LeagueSummonerService {
-  api_url = "http://prostagma.fr";
-    prostagma_api_url = `${this.api_url}/api/prostagmaApi`;
+  apiUrl = environment.apiUrl;
+  prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
 
-    constructor(private http: HttpClient){
+  constructor(private http: HttpClient) {
 
-    }
+  }
 
-    leagueSummonerByName(summonerName):Observable<any> {
-        var obj = {summonerName : summonerName};
-        return (this.http.post(this.prostagma_api_url + '/profile/getSummoner', obj).pipe(map(res => {
-            console.log(res);
-            return (res);
-        })));
-    }
+  leagueSummonerByName(sn): Observable<any> {
+    const obj = {summonerName: sn};
+    return (this.http.post(this.prostagmaApiUrl + '/profile/getSummoner', obj).pipe(map(res => {
+      console.log(res);
+      return (res);
+    })));
+  }
 }

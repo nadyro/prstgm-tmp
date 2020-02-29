@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {ChatService} from "../services/chat.service";
-import {Observable} from "rxjs";
-import {Users} from "../../../../models/Users";
-import {map} from "rxjs/operators";
-import {Message} from "../../../../models/Message";
-import {AuthService} from "../services/auth.service";
-import {ChatRequests} from "../../../../models/ChatRequests";
-import {UsersService} from "../services/users.service";
-import {NgxSpinnerService} from "ngx-spinner";
+import {ChatService} from '../services/chat.service';
+import {Observable} from 'rxjs';
+import {Users} from '../../../../models/Users';
+import {map} from 'rxjs/operators';
+import {Message} from '../../../../models/Message';
+import {AuthService} from '../services/auth.service';
+import {ChatRequests} from '../../../../models/ChatRequests';
+import {UsersService} from '../services/users.service';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-chat',
@@ -40,6 +40,7 @@ export class ChatComponent implements OnInit {
   selectUser(event) {
     this.selectedUser = event[0];
     const roomId = this.authService.userProfile._id + ' & ' + this.selectedUser._id;
+    console.log(roomId);
     this.chatService.initChat(roomId).subscribe((result) => {
       this.statusMessage = result;
       this.spinner.show();
@@ -85,6 +86,7 @@ export class ChatComponent implements OnInit {
       this.clickCounter--;
     }
   }
+
   ngOnInit() {
     this.chatRequests = new Array<ChatRequests>();
     this.selectedUser = new Users();

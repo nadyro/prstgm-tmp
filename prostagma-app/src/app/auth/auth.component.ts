@@ -12,7 +12,7 @@ export class AuthComponent implements OnInit {
   constructor(public authService: AuthService) {
   }
 
-  formattedMessage;
+  public message: string;
   authSubscribeForm = new FormGroup({
     email: new FormControl(
       '', Validators.email),
@@ -39,6 +39,9 @@ export class AuthComponent implements OnInit {
 
   onSubmit() {
     this.authService.saveUser(this.authSubscribeForm.value).subscribe(res => {
+      if (!res.success) {
+        this.message = res.message;
+      }
     });
   }
 

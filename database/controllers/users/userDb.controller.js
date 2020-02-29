@@ -25,9 +25,7 @@ function db_connect() {
 exports.connect = async function (req, res) {
   let authResults;
   try {
-    mongoose.connect('mongodb://localhost/prostagma', {useNewUrlParser: true});
-    const db = mongoose.connection;
-    console.log(req.body);
+    const db = db_connect();
     console.log("Attempting to login...");
     db.on('error', function (err) {
       console.error(err);
@@ -36,23 +34,40 @@ exports.connect = async function (req, res) {
       const collection = db.collection('users');
       collection.findOne({email: req.body.email}, (function (err, docs) {
         if (docs) {
-          console.log(docs.password);
           if (docs.password === req.body.password) {
             console.log("Login Successful");
             authResults = {
-              expiresIn: 7200,
-              accessToken: 'fdp',
-              user: docs
+              credentials: {
+                expiresIn: 7200,
+                accessToken: '123',
+              },
+              object: docs,
+              success: true,
+              message: 'Login successful !'
             };
-            const authR = {authResults: authResults};
-            return res.send(authR);
+            db.close();
+            return res.send(authResults);
+          } else {
+            authResults = {
+              credentials: null,
+              object: null,
+              success: false,
+              message: 'Email or password incorrect.'
+            };
+            db.close();
+            return res.send(authResults);
           }
         } else {
           console.log("This email doesn't exist in our database.");
-          authResults = 0;
+          authResults = {
+            credentials: null,
+            object: null,
+            success: false,
+            message: 'This email doesn\'t exist in our database.'
+          };
+          db.close();
           return res.send(authResults);
         }
-        db.close();
       }))
     });
   } catch (e) {
@@ -69,7 +84,6 @@ exports.getUserByEmail = async function (req, res) {
       const collection = db.collection('users');
       collection.findOne({email: req.body.email}, function (err, docs) {
         if (docs) {
-          console.log(docs);
           return (res.status(200).json({
             status: 200,
             user: docs
@@ -88,8 +102,6 @@ exports.getUserByEmail = async function (req, res) {
 };
 exports.getUserById = async function (req, res) {
   try {
-    // console.log('ICIIII')
-    // console.log(req);
     const db = db_connect();
     db.on('error', function (err) {
       console.error(err);
@@ -97,7 +109,6 @@ exports.getUserById = async function (req, res) {
     db.once('open', function () {
       const collection = db.collection('users');
       collection.findOne({_id: ObjectId(req.query.id)}, function (err, doc) {
-        // console.log('wsh');
         if (doc) {
           if (res)
             return res.send(doc);
@@ -121,7 +132,7 @@ exports.getUserById = async function (req, res) {
   } catch (e) {
     throw Error(e);
   }
-}
+};
 exports.getUsers = async function (req, res) {
   try {
     const db = db_connect();
@@ -130,7 +141,7 @@ exports.getUsers = async function (req, res) {
     });
     db.once('open', function () {
       const collection = db.collection('users');
-      const docs = collection.find({}).toArray(function (err, docs) {
+      collection.find({}).toArray(function (err, docs) {
         if (docs) {
           return res.send(docs);
         } else {
@@ -142,39 +153,44 @@ exports.getUsers = async function (req, res) {
       });
     })
   } catch (e) {
-    console.log('we here');
     throw Error(e);
   }
 };
 exports.saveUser = async function (req, res) {
   try {
-    console.log(req.body);
-    mongoose.connect('mongodb://localhost/prostagma', {useNewUrlParser: true});
-    const db = mongoose.connection;
+    let authResults;
+    const db = db_connect();
     db.on('error', function (err) {
       console.error(err);
     });
     db.once('open', function () {
       const User = mongoose.model('User', userSchema);
       const newUser = new User({
-        name: req.body.name,
-        surname: req.body.surname,
         email: req.body.email,
         password: req.body.password,
-        birthday: req.body.birthday,
-        gender: req.body.gender,
-        gender_specified: req.body.gender_specified,
-        address: req.body.address,
-        zip: req.body.zip,
-        city: req.body.city,
         username: req.body.username
       });
       newUser.save(function (err, data) {
         if (err) {
           console.error(err);
+          authResults = {
+            credentials: null,
+            object: null,
+            success: false,
+            message: 'Failed to create account.'
+          };
+          return res.send(authResults);
         } else {
-          console.log('Saved : ', data);
-          return res.send(data);
+          authResults = {
+            credentials: {
+              expiresIn: 7200,
+              accessToken: '123',
+            },
+            object: data,
+            success: true,
+            message: 'Subscription successful !'
+          };
+          return res.send(authResults);
         }
       });
     });

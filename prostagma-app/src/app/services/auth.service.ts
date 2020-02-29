@@ -4,8 +4,9 @@ import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {environment} from '../../environments/environment.prod';
+import {environment} from '../../environments/environment';
 import {Users} from '../../../../models/Users';
+import {AuthResults} from '../../../../models/AuthResults';
 
 (window as any).global = window;
 
@@ -30,29 +31,28 @@ export class AuthService {
     this.getAccessToken();
   }
 
-  apiUrl = 'http://prostagma.fr';
-  prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
+  private apiUrl = environment.apiUrl;
+  private prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
 
-  private _setSession(authResult, profile) {
-    console.log(authResult);
-    this.expiresAt = authResult.authResults.expiresIn * 1000 + Date.now();
-    this.accessToken = authResult.accessToken;
-    this.userProfile = profile;
+  private _setSession(authResult: AuthResults<Users>) {
+    this.expiresAt = authResult.credentials.expiresIn * 1000 + Date.now();
+    this.accessToken = authResult.credentials.accessToken;
+    this.userProfile = authResult.object;
+    this.isAdminBool = authResult.object.isAdminBool;
     this.authenticated = true;
-    this.isAdminBool = profile.isAdminBool;
   }
 
-  getUserInfos(authResult) {
-    this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
+  getUserInfos(authResult: AuthResults<Users>) {
+    this.auth0.client.userInfo(authResult.credentials.accessToken, (err, profile) => {
       if (profile) {
-        this._setSession(authResult, profile);
+        this._setSession(authResult);
       }
     });
   }
 
   getAccessToken() {
-    this.auth0.checkSession({}, (err, authResult) => {
-      if (authResult && authResult.accessToken) {
+    this.auth0.checkSession({}, (err, authResult: AuthResults<Users>) => {
+      if (authResult && authResult.credentials.accessToken) {
         this.getUserInfos(authResult);
       }
     });
@@ -60,8 +60,8 @@ export class AuthService {
 
   handleLoginCallback() {
     console.log('test');
-    this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken) {
+    this.auth0.parseHash((err, authResult: AuthResults<Users>) => {
+      if (authResult && authResult.credentials.accessToken) {
         window.location.hash = '';
         this.getUserInfos(authResult);
       } else if (err) {
@@ -86,11 +86,7 @@ export class AuthService {
   }
 
   get isAdmin(): boolean {
-    if (this.isAdminBool) {
-      return true;
-    } else {
-      return false;
-    }
+    return !!this.isAdminBool;
   }
 
   team() {
@@ -102,18 +98,26 @@ export class AuthService {
     );
   }
 
-  saveUser(formGroup): Observable<any> {
-    return (this.http.post(this.prostagmaApiUrl + '/db/saveUser', formGroup).pipe(map(res => {
-      this.router.navigate(['/auth_login']).then((callback) => {
+  saveUser(formGroup): Observable<AuthResults<Users>> {
+    return (this.http.post<AuthResults<Users>>(this.prostagmaApiUrl + '/db/saveUser', formGroup).pipe(map(res => {
+      if (!res.success) {
+        return res;
+      }
+      this._setSession(res);
+      this.router.navigate(['/chat']).then((callback) => {
         console.log('Navigated to : ' + callback);
       });
       return res;
     })));
   }
 
-  log(formGroup): Observable<any> {
-    return (this.http.post(this.prostagmaApiUrl + '/db/connect', formGroup).pipe(map(res => {
-      this._setSession(res, res['authResults'].user);
+  log(formGroup): Observable<AuthResults<Users>> {
+    return (this.http.post<AuthResults<Users>>(this.prostagmaApiUrl + '/db/connect', formGroup).pipe(map(res => {
+      console.log(res);
+      if (res.success === false) {
+        return res;
+      }
+      this._setSession(res);
       this.router.navigate(['/chat']).then((callback) => {
         console.log('Navigated to : ' + callback);
       });

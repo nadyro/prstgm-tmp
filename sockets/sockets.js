@@ -1,7 +1,11 @@
 const socketIo = require('socket.io');
 const request = require('request');
-const urlUserController = 'http://prostagma.fr/api/prostagmaApi/db/getUsersById';
-
+const NODE_ENV = process.env.NODE_ENV;
+let urlUserController;
+if (NODE_ENV === 'dev')
+  urlUserController = 'http://localhost:8081/api/prostagmaApi/db/getUsersById';
+else
+  urlUserController = 'http://prostagma.fr/api/prostagmaApi/db/getUsersById';
 let storedClients = [];
 let user;
 let chatRequest = {};
@@ -30,7 +34,6 @@ function addToRoom(io, socket, roomId) {
       if (error) {
         reject(error);
       } else {
-        console.log(clients);
         clients.map(c => {
           if (!storedClients.includes(c))
             storedClients.push(c);
@@ -43,13 +46,12 @@ function addToRoom(io, socket, roomId) {
   });
 }
 
-module.exports = function (server, usersId) {
+module.exports = function (server) {
   const io = socketIo.listen(server);
 
   const categoriesSocketHandler = io.of('/categories');
   const chatSocketHandler = io.of('/chat');
   io.on('connection', function (socket) {
-    console.log('here');
     socket.emit('init', {
       message: 'Sockets are listening.'
     });
@@ -73,8 +75,6 @@ module.exports = function (server, usersId) {
       clearInterval(interval);
     });
     socket.on('requestConnection', function (usersId) {
-      console.log('connected');
-      console.log(storedClients);
       const usersIds = usersId.split(' ');
       const promiseRequester = requestFunction(urlUserController, {id: usersIds[0]});
       const promiseRecipient = requestFunction(urlUserController, {id: usersIds[2]});

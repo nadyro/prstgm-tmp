@@ -2,17 +2,18 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {FormGroup} from '@angular/forms';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Games} from '../../../../../models/Games';
 import {Categories} from '../../../../../models/Categories';
 import {ResponseReturn} from '../../../../../models/ResponseReturn';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class AdminService {
   constructor(private http: HttpClient) {
   }
 
-  apiUrl = 'http://prostagma.fr';
+  apiUrl = environment.apiUrl;
   prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
 
   addGame(gameForm: FormGroup): Observable<ResponseReturn> {

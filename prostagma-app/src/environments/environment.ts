@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'http://localhost:8081',
   auth: {
     clientID: 'uF6bx7ipLoeTyS4jg1GFiMEZjAA4nVcA',
     domain: 'prostagma.eu.auth0.com',

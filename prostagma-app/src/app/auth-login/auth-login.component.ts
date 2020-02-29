@@ -11,6 +11,7 @@ export class AuthLoginComponent implements OnInit {
 
   constructor(public authService: AuthService) { }
 
+  public message: string;
   authLoginForm = new FormGroup({
     email: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
@@ -19,7 +20,9 @@ export class AuthLoginComponent implements OnInit {
   onSubmit(id) {
     console.log(id);
     this.authService.log(this.authLoginForm.value).subscribe(res => {
-      console.log(res);
+      if (!res.success) {
+        this.message = res.message;
+      }
     });
   }
   ngOnInit() {

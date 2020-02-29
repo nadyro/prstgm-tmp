@@ -4,6 +4,7 @@ import {Users} from '../../../../models/Users';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from './auth.service';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class UsersService {
   readonly prostagmaApiUrl: string;
 
   constructor(private httpClient: HttpClient, private authService: AuthService) {
-    this.apiUrl = 'http://prostagma.fr';
+    this.apiUrl = environment.apiUrl;
     this.prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
   }
 

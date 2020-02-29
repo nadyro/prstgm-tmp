@@ -1,24 +1,21 @@
-import { Injectable } from '@angular/core';
-import * as auth0 from 'auth0-js';
-import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { throwError, Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { FormGroup } from '@angular/forms';
-import { environment } from '../../environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class TeamsService {
-    constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {
 
-    }
+  }
 
-  api_url = "http://prostagma.fr";
-    prostagma_api_url = `${this.api_url}/api/prostagmaApi`;
-    getUsers(){
-        return (this.http.get(this.prostagma_api_url + '/db/getUsers').pipe(map(res => {
-            console.log(res);
-            return (res);
-        })));
-    }
+  private apiUrl = environment.apiUrl;
+  private prostagmaApiUrl = `${this.apiUrl}/api/prostagmaApi`;
+
+  getUsers() {
+    return (this.http.get(this.prostagmaApiUrl + '/db/getUsers').pipe(map(res => {
+      console.log(res);
+      return (res);
+    })));
+  }
 }

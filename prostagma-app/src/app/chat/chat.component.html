@@ -21,8 +21,7 @@
                  src="../../assets/images/bg/belowsky.jpg" alt="My Profile Picture">
             <div class="text-profile-details" (mouseleave)="displayOverlay(imgRequesterDetails, 0)">
               <div class="user-details">
-                <p>{{selectedUser.name}}</p>
-                <p>{{selectedUser.surname}}</p>
+                <p>{{selectedUser.username}}</p>
               </div>
             </div>
           </div>
@@ -59,8 +58,7 @@
                  alt="My Profile Picture">
             <div class="text-profile-details" (mouseleave)="displayOverlay(imgDetails, 0)">
               <div class="user-details">
-                <p>{{authService.userProfile.name}}</p>
-                <p>{{authService.userProfile.surname}}</p>
+                <p>{{authService.userProfile.username}}</p>
               </div>
             </div>
           </div>
