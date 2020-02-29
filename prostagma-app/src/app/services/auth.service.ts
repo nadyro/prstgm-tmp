@@ -104,6 +104,9 @@ export class AuthService {
 
   saveUser(formGroup): Observable<any> {
     return (this.http.post(this.prostagmaApiUrl + '/db/saveUser', formGroup).pipe(map(res => {
+      this.router.navigate(['/auth_login']).then((callback) => {
+        console.log('Navigated to : ' + callback);
+      });
       return res;
     })));
   }
@@ -111,7 +114,7 @@ export class AuthService {
   log(formGroup): Observable<any> {
     return (this.http.post(this.prostagmaApiUrl + '/db/connect', formGroup).pipe(map(res => {
       this._setSession(res, res['authResults'].user);
-      this.router.navigate(['/']).then((callback) => {
+      this.router.navigate(['/chat']).then((callback) => {
         console.log('Navigated to : ' + callback);
       });
       return (res);

@@ -102,10 +102,8 @@
   transform: translateY(-50%);
   top: 50%;
   height: 400px;
-  overflow: scroll;
-  border-top: solid;
-  border-bottom: solid;
-  border-width: 1px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
 }
 
 .cr {

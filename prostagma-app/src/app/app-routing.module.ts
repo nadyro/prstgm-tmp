@@ -21,6 +21,7 @@ import {AdminComponent} from './admin/admin.component';
 const appRoutes: Routes = [
   {path: 'admin', component: AdminComponent},
   {path: 'auth', component: AuthComponent},
+  {path: 'home', component: HomeComponent},
   {path: 'auth_login', component: AuthLoginComponent},
   {path: 'caroussel', component: CarousselComponent},
   {path: 'news', component: NewsComponent},
@@ -32,7 +33,7 @@ const appRoutes: Routes = [
   {path: 'media', component: MediaComponent},
   {path: 'callback', component: CallbackComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: '', component: HomeComponent},
+  {path: '', component: AuthLoginComponent},
   {path: '**', component: AppComponent}
 ];
 

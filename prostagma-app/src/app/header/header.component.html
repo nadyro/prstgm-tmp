@@ -1,13 +1,13 @@
-<div class="prostagma-img">
-  <a routerLink="">Home</a>
+<div class="prostagma-img" *ngIf="authService.isLoggedIn">
+  <a routerLink="/home">Home</a>
 </div>
-<div class="profile" *ngIf="authService.isLoggedIn">
-  <a routerLink="/profile">Profile</a>
-</div>
-<div class="login">
+<div class="login col-lg-2 col-md-2 col-sm-2">
   <a routerLink="/auth_login" *ngIf="!authService.isLoggedIn">Sign in</a>
   <a *ngIf="authService.isLoggedIn" (click)="authService.logout()">Sign out</a>
 </div>
-<div class="admin">
+<div class="profile col-lg-2 col-md-2 col-sm-2" *ngIf="authService.isLoggedIn">
+  <a routerLink="/profile">Profile</a>
+</div>
+<div class="admin" *ngIf="authService.isLoggedIn">
   <a routerLink="/admin">Admin</a>
 </div>
