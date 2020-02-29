@@ -86,15 +86,27 @@
 }
 
 .text-container {
-  margin-top: 10px;
+  height: 80px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 .text-container textarea {
   resize: none;
   border: none;
-  box-shadow: 0 0 1px;
-  width: 100%;
   padding: 5px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.6);
+  width: 80%;
+  height: 100%;
+}
+
+.text-container .btn-send {
+  cursor: pointer;
+  width: 20%;
+  float: right;
+  height: 100%;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.6);
 }
 
 .messages {
@@ -104,6 +116,28 @@
   height: 400px;
   overflow-y: scroll;
   scrollbar-width: thin;
+}
+
+.message-content {
+  max-width: 50%;
+  margin-bottom: 10px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  height: auto;
+}
+
+.message-content p {
+  margin: 3px;
+  word-wrap: break-word;
+}
+
+.display-message-right {
+  border-top-left-radius: 35px;
+  transform: translateX(100%);
+}
+
+.display-message-left {
+  border-top-right-radius: 35px;
 }
 
 .cr {

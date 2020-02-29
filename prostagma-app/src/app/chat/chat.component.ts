@@ -33,8 +33,14 @@ export class ChatComponent implements OnInit {
     this.crDisplayed = false;
   }
 
-  sendSimpleMessage(btn) {
-    this.chatService.sendMessage(btn.previousSibling.value);
+  sendSimpleMessage(message, event) {
+    if (event) {
+      this.chatService.sendMessage(message.previousSibling.value);
+      message.previousSibling.value = '';
+    } else {
+      this.chatService.sendMessage(message.value);
+      message.value = '';
+    }
   }
 
   selectUser(event) {

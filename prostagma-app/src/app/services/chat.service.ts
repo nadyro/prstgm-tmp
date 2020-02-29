@@ -27,7 +27,7 @@ export class ChatService {
     if (this.socket) {
       this.socket.disconnect();
     }
-    this.socket = io.connect('http://localhost:8081/chat');
+    this.socket = io.connect(this.apiUrl + '/chat');
     this.socket.on('init', (data) => {
       console.log(data);
     });
@@ -124,6 +124,7 @@ export class ChatService {
     const newMessage = new Message();
     newMessage.content = message;
     newMessage.receptionDate = new Date();
+    newMessage.sender = this.authService.userProfile;
     this.socket.emit('simpleMessage', newMessage);
   }
 }
