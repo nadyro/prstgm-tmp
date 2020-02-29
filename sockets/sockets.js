@@ -103,7 +103,7 @@ module.exports = function (server) {
         }, 3000);
       });
       interval = setInterval(() => {
-        if (!chatRequest.fulfilled)
+        if (chatRequest.recipient && !chatRequest.fulfilled)
           io.of('chat').emit('fulfill', chatRequest);
         console.log('Emitting...');
       }, 5000);
