@@ -1,7 +1,6 @@
-<div class="auth col-md-11 col-sm-11">
+<div class="auth col-md-12 col-sm-12">
   <div class="auth_children subscribe col-md-5 col-sm-5">
     <h4>First connection ?</h4>
-    <h5>Subscribe and start to enjoy gaming in real life !</h5>
     <div class="form_errors">
       <div *ngIf="password.invalid" class="form_error">
         <h6>Warning! Your attention is required here!</h6>
@@ -29,7 +28,7 @@
       </div>
     </div>
     <form [formGroup]="authSubscribeForm" (ngSubmit)="onSubmit()">
-      <div class="first_part col-md-5 col-sm-5">
+      <div class="first_part">
         <div class="form-group">
           <label>
             Email :

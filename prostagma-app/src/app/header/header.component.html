@@ -1,13 +1,50 @@
-<div class="prostagma-img" *ngIf="authService.isLoggedIn">
-  <a routerLink="/home">Home</a>
+<div class="classic-header">
+  <div class="home-admin col-lg-6 col-md-6 col-sm-6">
+    <div class="home col-lg-6 col-md-6 col-sm-6" *ngIf="authService.isLoggedIn">
+      <a routerLink="/home">Home</a>
+    </div>
+    <div class="admin col-lg-6 col-md-6 col-sm-6" *ngIf="authService.isLoggedIn">
+      <a routerLink="/admin">Admin</a>
+    </div>
+  </div>
+
+  <div class="login-profile col-lg-6 col-md-6 col-sm-6">
+    <div class="profile col-lg-6 col-md-6 col-sm-6" *ngIf="authService.isLoggedIn">
+      <a routerLink="/profile">Profile</a>
+    </div>
+    <div class="login col-lg-6 col-md-6 col-sm-6">
+      <a routerLink="/auth_login" *ngIf="!authService.isLoggedIn">Sign in</a>
+      <a *ngIf="authService.isLoggedIn" (click)="authService.logout()">Sign out</a>
+    </div>
+  </div>
 </div>
-<div class="login col-lg-2 col-md-2 col-sm-2">
-  <a routerLink="/auth_login" *ngIf="!authService.isLoggedIn">Sign in</a>
-  <a *ngIf="authService.isLoggedIn" (click)="authService.logout()">Sign out</a>
-</div>
-<div class="profile col-lg-2 col-md-2 col-sm-2" *ngIf="authService.isLoggedIn">
-  <a routerLink="/profile">Profile</a>
-</div>
-<div class="admin" *ngIf="authService.isLoggedIn">
-  <a routerLink="/admin">Admin</a>
+
+<div class="mobile-header">
+  <div #menuDisplayer class="header-button" (click)="displayMobileHeader(menu, menuDisplayer)">
+    <div #menu class="menu">
+      <div class="home-admin col-lg-6 col-md-6 col-sm-6">
+        <div class="home col-lg-6 col-md-6 col-sm-6" *ngIf="authService.isLoggedIn">
+          <a routerLink="/home">Home</a>
+        </div>
+        <div class="admin col-lg-6 col-md-6 col-sm-6" *ngIf="authService.isLoggedIn">
+          <a routerLink="/admin">Admin</a>
+        </div>
+      </div>
+
+      <div class="login-profile col-lg-6 col-md-6 col-sm-6">
+        <div class="profile col-lg-6 col-md-6 col-sm-6" *ngIf="authService.isLoggedIn">
+          <a routerLink="/profile">Profile</a>
+        </div>
+        <div class="login col-lg-6 col-md-6 col-sm-6">
+          <a routerLink="/auth_login" *ngIf="!authService.isLoggedIn">Sign in</a>
+          <a *ngIf="authService.isLoggedIn" (click)="authService.logout()">Sign out</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu-name">
+      <p class="menu-text">Menu</p>
+      <p class="menu-name-arrow"><</p>
+
+    </div>
+  </div>
 </div>

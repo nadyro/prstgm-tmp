@@ -2,8 +2,76 @@
   cursor: pointer;
 }
 
-.profile, .login {
+.mobile-header {
+  display: none;
+}
+
+.home-admin, .login-profile {
   display: inline-block;
-  float: right;
-  text-align: center;
+}
+
+.home-admin .home, .home-admin .admin, .login-profile .login, .login-profile .profile {
+  display: inline-block;
+}
+
+@media screen and (max-width: 800px) {
+  .classic-header {
+    display: none;
+  }
+  .mobile-header {
+    display: block;
+  }
+  .menu {
+    display: none;
+    padding: 15px;
+  }
+  .menu a {
+    color: white;
+    text-shadow: 1px 1px 2px black;
+  }
+  .header-button {
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 35px;
+    width: 60px;
+    height: 60px;
+    top: 0;
+    transition: 0.5s;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }
+  .header-button .menu-name p {
+    margin: 0;
+    display: inline-block;
+  }
+  .header-button .menu-name {
+    margin: 0;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    transition: 0.5s;
+    left: 0;
+    padding: 5px;
+  }
+  .header-button .menu-name .menu-text {
+    text-shadow: 1px 1px 2px black;
+    cursor: pointer;
+  }
+
+  .header-button .menu-name-arrow {
+    transition: 1s;
+    display: inline-block;
+    border-style: solid;
+    border-width: 8px 5px 0;
+    border-color: white transparent transparent transparent;
+    width: 0;
+    height: 0;
+    color: transparent;
+    position: absolute;
+    bottom: 10px;
+    margin-left: 3px !important;
+  }
 }

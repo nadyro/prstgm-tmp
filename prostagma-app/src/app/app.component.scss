@@ -1,9 +1,19 @@
-.header_container, .home_page{
-   display: inline-block;
- }
-.header_container{
+.header-container {
   padding: 0;
   position: relative;
   height: 80px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.header-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .header-container {
+    display: none;
+  }
+  .header-mobile {
+    display: block;
+  }
 }

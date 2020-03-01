@@ -20,8 +20,9 @@
   -webkit-animation: blinds 5s ease infinite;
   -moz-animation: blinds 5s ease infinite;
   margin: 5px 0;
-  //background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, white 100%);
-  //animation: blinds 5s ease infinite;
+  border-radius: 35px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+  font-weight: 700;
 }
 
 @-webkit-keyframes blinds {

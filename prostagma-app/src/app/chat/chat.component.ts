@@ -72,15 +72,19 @@ export class ChatComponent implements OnInit {
   }
 
   resizeCr(event, cr) {
+    this.activeChatRequest = this.chatRequests.length;
     if (this.clickCounter === 1) {
       this.crDisplayed = false;
       cr.style.height = '25px';
+      this.clickCounter--;
+    } else if (this.clickCounter === 1 && this.chatRequests.length === 0) {
+      this.crDisplayed = false;
       this.clickCounter--;
     }
   }
 
   displayCR(element) {
-    if (this.clickCounter === 0) {
+    if (this.clickCounter === 0 && this.chatRequests.length > 0) {
       element.style.height = '150px';
       setTimeout(() => {
         this.crDisplayed = true;

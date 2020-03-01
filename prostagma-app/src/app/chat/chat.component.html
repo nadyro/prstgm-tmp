@@ -1,4 +1,4 @@
-<div class="chat-page col-md-11 col-sm-11">
+<div class="chat-page col-md-12 col-sm-12">
   <h3>Messenger</h3>
   <div class="messenger-container container">
     <div class="user-finder">
@@ -13,13 +13,13 @@
                  multiple="false">
       </ng-select>
     </div>
-    <div class="left-panel panels col-3">
+    <div class="left-panel panels col-lg-3 col-md-3 col-sm-3">
       <div class="profile-container container">
         <div class="profile-details">
           <div class="img-profile-details">
-            <img #imgRequesterDetails (mouseenter)="displayOverlay(imgRequesterDetails, 1)"
+            <img #imgRecipientDetails (mouseenter)="displayOverlay(imgRecipientDetails, 1)"
                  src="../../assets/images/bg/belowsky.jpg" alt="My Profile Picture">
-            <div class="text-profile-details" (mouseleave)="displayOverlay(imgRequesterDetails, 0)">
+            <div class="text-profile-details" (mouseleave)="displayOverlay(imgRecipientDetails, 0)">
               <div class="user-details">
                 <p>{{selectedUser.username}}</p>
               </div>
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="middle-panel panels col-6">
+    <div class="middle-panel panels col-lg-6 col-md-6 col-sm-6">
       <div class="messages">
         <p>{{statusMessage}}</p>
         <p>{{welcomeMessage}}</p>
@@ -37,8 +37,9 @@
                      color="#fff"
                      type="ball-scale-multiple"></ngx-spinner>
         <ng-container *ngFor="let message of messages">
-          <div
-            class="message-content {{message.sender.username === authService.userProfile.username ? 'display-message-right' : 'display-message-left'}}">
+          <div class="message-content {{
+          message.sender.username === authService.userProfile.username ?
+          'display-message-right' : 'display-message-left'}}">
             <p class="message-content-username">
               {{message.sender.username}}
             </p>
@@ -46,15 +47,34 @@
           </div>
         </ng-container>
       </div>
-      <div class="text-container container">
-        <textarea #message placeholder="Type a message" (keyup.enter)="sendSimpleMessage(message, 0)">
-
-        </textarea>
-        <button #sendBtn class="btn-send btn btn-primary" type="submit" (click)="sendSimpleMessage(sendBtn, 1)">Send
+      <div class="text-container">
+        <div class="right-panel-mobile">
+          <div class="img-profile-details">
+            <div #cr class="cr" (click)="displayCR(cr)">
+              <div class="dot-online" *ngIf="activeChatRequest > 0"></div>
+              <app-chat-requests class="app-chat-requests" (selectedChat)="getSelectedUsers($event)"
+                                 (resized)="resizeCr($event, cr)"
+                                 [chatRequests]="chatRequests"
+                                 [crDisplayed]="crDisplayed"
+                                 *ngIf="crDisplayed">
+              </app-chat-requests>
+            </div>
+            <img #imgDetails (mouseenter)="displayOverlay(imgDetails, 1)" src="../../assets/images/travel_by_air.jpg"
+                 alt="My Profile Picture">
+            <div class="text-profile-details" (mouseleave)="displayOverlay(imgDetails, 0)">
+              <div class="user-details">
+                <p>{{authService.userProfile.username}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <textarea #message placeholder="Type a message" (keyup.enter)="sendSimpleMessage(message, 0)"></textarea>
+        <button #sendBtn class="btn-send btn btn-primary" type="submit" (click)="sendSimpleMessage(sendBtn, 1)">
+          Send
         </button>
       </div>
     </div>
-    <div class="right-panel panels col-3">
+    <div class="right-panel panels col-lg-3 col-md-3 col-sm-3">
       <div class="profile-container container">
         <div #cr class="cr">
           <div class="dot-online" *ngIf="activeChatRequest > 0"></div>

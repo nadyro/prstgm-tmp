@@ -1,56 +1,24 @@
-.auth{
-    float: right;
-    text-align: center;
-}
 .auth_children{
-    display: inline-block;
-    text-align: center;
-    border: solid;
-    border-width: 1px;
-    border-color: #e8e9e9;
-    padding: 20px 20px;
+  text-align: center;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  position: relative;
+  transform: translateX(-50%);
+  left: 50%;
 }
 .auth_submit{
-    display: block;
+  display: block;
+  position: relative;
+  transform: translateX(-50%);
+  left: 50%;
+}
+
+@media screen and (max-width: 800px) {
+  .auth {
+    float: unset;
+    text-align: center;
     position: relative;
-    transform: translateX(-50%);
-    left: 50%;
-}
-.subscribe .first_part, .subscribe .second_part, .subscribe .mid_part{
-    display: inline-block;
-}
-.subscribe .second_part {
-    float: right;
-}
-.identity{
-    padding: 0;
-}
-.identity label{
-    display: inline-block;
-    padding: 0;
-}
-.birthday_label{
-    position: relative;
-}
-.hover{
-    position: absolute;
-    display: none;
-}
-.hover_symbol{
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    color: black;
-    top: 0;
-    right: 0;
-    border-radius: 50px;
-    border: solid;
-    border-width: 0.5px;
-}
-.hover_symbol p{
-    margin: 0;
-    position: absolute;
-    transform: translateX(-50%) translateY(-50%);
-    left: 50%;
-    top: 50%;
+    top: 60px;
+    transform: unset;
+  }
 }
