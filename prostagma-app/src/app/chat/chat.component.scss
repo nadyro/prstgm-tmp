@@ -181,9 +181,31 @@
   display: none;
 }
 
-@media screen and (max-width: 375px) {
+.text-container-mobile {
+  display: none;
+}
+
+@media screen and (height: 740px) and (width: 360px) {
+  .middle-panel .messages {
+    height: 450px;
+  }
+}
+
+@media screen and (height: 667px) and (width: 375px) {
+  .middle-panel .messages {
+    height: 350px;
+  }
+}
+
+@media screen and (height: 736px) and (width: 414px) {
   .middle-panel .messages {
     height: 400px;
+  }
+}
+
+@media screen and (height: 812px) and (width: 375px) {
+  .middle-panel .messages {
+    height: 500px;
   }
 }
 
@@ -239,26 +261,53 @@
     position: unset;
     top: unset;
   }
-  .middle-panel .text-container {
-    position: relative;
+  .text-container {
+    display: none;
   }
 
-  .middle-panel .text-container textarea {
-    height: 55px;
+  .text-container-mobile {
+    height: 50px;
+    position: relative;
+    bottom: 0;
+    padding: 5px;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+
+
+  .text-container-mobile textarea {
+    resize: none;
+    border: none;
+    padding: 5px 15px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.6);
+    width: 80%;
+    height: 100%;
     border-radius: 35px;
   }
-  .middle-panel .text-container .btn-send {
-    height: 55px;
+  .text-container-mobile .btn-send {
+    position: relative;
+    width: 20%;
     border-radius: 35px;
   }
+
+  .btn-send img {
+    position: absolute;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+    top: 50%;
+  }
+
   .right-panel {
     display: none !important;
   }
   .right-panel-mobile {
     display: block;
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
+  }
+  .text-container-mobile {
+    display: block;
   }
   .profile-container {
     position: relative;
@@ -298,7 +347,7 @@
     position: absolute;
     transform: translateX(-50%) translateY(-50%);
     top: -20px;
-    left: -10px;
+    left: 0;
   }
 
   .right-panel-mobile .text-profile-details {

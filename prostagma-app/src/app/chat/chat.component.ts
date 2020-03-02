@@ -99,7 +99,6 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this.chatRequests = new Array<ChatRequests>();
-    this.selectedUser = new Users();
     this.chatService.getChatRequests().subscribe(chatRequest => {
       if (!this.chatRequests.some(cr => cr.roomId === chatRequest.roomId)) {
         this.chatRequests.push(chatRequest);

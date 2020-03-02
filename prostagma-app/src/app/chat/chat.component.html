@@ -14,7 +14,7 @@
       </ng-select>
     </div>
     <div class="left-panel panels col-lg-3 col-md-3 col-sm-3">
-      <div class="profile-container container">
+      <div class="profile-container container" *ngIf="this.selectedUser">
         <div class="profile-details">
           <div class="img-profile-details">
             <img #imgRecipientDetails (mouseenter)="displayOverlay(imgRecipientDetails, 1)"
@@ -48,20 +48,7 @@
         </ng-container>
       </div>
       <div class="text-container">
-        <div class="right-panel-mobile">
-          <div class="img-profile-details">
-            <div #cr class="cr" (click)="displayCR(cr)">
-              <div class="dot-online" *ngIf="activeChatRequest > 0"></div>
-              <app-chat-requests class="app-chat-requests" (selectedChat)="getSelectedUsers($event)"
-                                 (resized)="resizeCr($event, cr)"
-                                 [chatRequests]="chatRequests"
-                                 [crDisplayed]="crDisplayed"
-                                 *ngIf="crDisplayed">
-              </app-chat-requests>
-            </div>
-            <img src="../../assets/images/travel_by_air.jpg" alt="My Profile Picture">
-          </div>
-        </div>
+
         <textarea #message placeholder="Type a message" (keyup.enter)="sendSimpleMessage(message, 0)"></textarea>
         <button #sendBtn class="btn-send btn btn-primary" type="submit" (click)="sendSimpleMessage(sendBtn, 1)">
           <img src="../../assets/images/sharp_send_white_24dp.png" alt="Send">
@@ -91,6 +78,26 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="text-container text-container-mobile">
+      <div class="right-panel-mobile">
+        <div class="img-profile-details">
+          <div #cr class="cr" (click)="displayCR(cr)">
+            <div class="dot-online" *ngIf="activeChatRequest > 0"></div>
+            <app-chat-requests class="app-chat-requests" (selectedChat)="getSelectedUsers($event)"
+                               (resized)="resizeCr($event, cr)"
+                               [chatRequests]="chatRequests"
+                               [crDisplayed]="crDisplayed"
+                               *ngIf="crDisplayed">
+            </app-chat-requests>
+          </div>
+          <img src="../../assets/images/travel_by_air.jpg" alt="My Profile Picture">
+        </div>
+      </div>
+      <textarea #message placeholder="Type a message" (keyup.enter)="sendSimpleMessage(message, 0)"></textarea>
+      <button #sendBtn class="btn-send btn btn-primary" type="submit" (click)="sendSimpleMessage(sendBtn, 1)">
+        <img src="../../assets/images/sharp_send_white_24dp.png" alt="Send">
+      </button>
     </div>
   </div>
 </div>
