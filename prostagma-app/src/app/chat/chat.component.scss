@@ -187,20 +187,52 @@
   }
 }
 
-@media screen and (max-width: 360px) {
-  .middle-panel .messages {
-    height: 300px;
-  }
-}
-
 @media screen and (max-width: 765px) {
   .text-profile-details {
     opacity: 1;
+    transition: 0.5s;
+    position: unset;
+    transform: unset;
+    top: unset;
+    left: unset;
+    width: auto;
+    background: rgba(255, 255, 255, 0.5);
+    height: 100%;
+    border-radius: 0;
+    display: inline-block;
   }
   .chat-page .messenger-container .panels {
     height: unset;
     float: none;
     display: block;
+  }
+  .left-panel {
+    height: 80px !important;
+  }
+  .left-panel .profile-container {
+    height: 100%;
+  }
+  .left-panel .profile-container .profile-details {
+    height: 100%;
+  }
+  .left-panel .profile-container .profile-details .img-profile-details {
+    height: 100%;
+  }
+  .left-panel .profile-container .profile-details .img-profile-details img {
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    transform: translateY(-50%);
+    top: 50%;
+    position: relative;
+    float: left;
+  }
+  .left-panel .profile-details {
+    box-shadow: unset;
+  }
+  .left-panel .text-profile-details {
+    float: left;
+    margin: 0 10px;
   }
   .middle-panel .messages {
     transform: unset;
@@ -209,6 +241,15 @@
   }
   .middle-panel .text-container {
     position: relative;
+  }
+
+  .middle-panel .text-container textarea {
+    height: 55px;
+    border-radius: 35px;
+  }
+  .middle-panel .text-container .btn-send {
+    height: 55px;
+    border-radius: 35px;
   }
   .right-panel {
     display: none !important;
@@ -255,9 +296,9 @@
 
   .right-panel-mobile .img-profile-details {
     position: absolute;
-    top: -15px;
     transform: translateX(-50%) translateY(-50%);
-    left: -15px;
+    top: -20px;
+    left: -10px;
   }
 
   .right-panel-mobile .text-profile-details {

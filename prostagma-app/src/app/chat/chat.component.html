@@ -59,18 +59,12 @@
                                  *ngIf="crDisplayed">
               </app-chat-requests>
             </div>
-            <img #imgDetails (mouseenter)="displayOverlay(imgDetails, 1)" src="../../assets/images/travel_by_air.jpg"
-                 alt="My Profile Picture">
-            <div class="text-profile-details" (mouseleave)="displayOverlay(imgDetails, 0)">
-              <div class="user-details">
-                <p>{{authService.userProfile.username}}</p>
-              </div>
-            </div>
+            <img src="../../assets/images/travel_by_air.jpg" alt="My Profile Picture">
           </div>
         </div>
         <textarea #message placeholder="Type a message" (keyup.enter)="sendSimpleMessage(message, 0)"></textarea>
         <button #sendBtn class="btn-send btn btn-primary" type="submit" (click)="sendSimpleMessage(sendBtn, 1)">
-          Send
+          <img src="../../assets/images/sharp_send_white_24dp.png" alt="Send">
         </button>
       </div>
     </div>
