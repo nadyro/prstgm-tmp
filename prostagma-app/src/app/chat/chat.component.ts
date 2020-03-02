@@ -45,12 +45,13 @@ export class ChatComponent implements OnInit {
 
   selectUser(event) {
     this.selectedUser = event[0];
-    const roomId = this.authService.userProfile._id + ' & ' + this.selectedUser._id;
-    console.log(roomId);
-    this.chatService.initChat(roomId).subscribe((result) => {
-      this.statusMessage = result;
-      this.spinner.show();
-    });
+    if (this.selectedUser) {
+      const roomId = this.authService.userProfile._id + ' & ' + this.selectedUser._id;
+      this.chatService.initChat(roomId).subscribe((result) => {
+        this.statusMessage = result;
+        this.spinner.show();
+      });
+    }
   }
 
   displayOverlay(imgDetails, v) {
@@ -86,13 +87,11 @@ export class ChatComponent implements OnInit {
   displayCR(element) {
     if (this.clickCounter === 0 && this.chatRequests.length > 0) {
       element.style.height = '150px';
-      setTimeout(() => {
-        this.crDisplayed = true;
-      }, 500);
+      this.crDisplayed = true;
       this.clickCounter++;
     } else if (this.clickCounter === 1) {
       this.crDisplayed = false;
-      element.style.height = '25px';
+      element.style.height = '100%';
       this.clickCounter--;
     }
   }

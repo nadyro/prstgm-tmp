@@ -20,7 +20,8 @@
 </div>
 
 <div class="mobile-header">
-  <div #menuDisplayer class="header-button" (click)="displayMobileHeader(menu, menuDisplayer)">
+  <div #menuDisplayer class="header-button" (click)="displayMobileHeader(menu, menuDisplayer)" cdkDragBoundary="body"
+       cdkDrag>
     <div #menu class="menu">
       <div class="home-admin col-lg-6 col-md-6 col-sm-6">
         <div class="home col-lg-6 col-md-6 col-sm-6" *ngIf="authService.isLoggedIn">

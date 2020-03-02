@@ -33,6 +33,7 @@
         <p>{{statusMessage}}</p>
         <p>{{welcomeMessage}}</p>
         <ngx-spinner bdColor="rgba(0,0,0,0.5)"
+                     [fullScreen]="false"
                      size="medium"
                      color="#fff"
                      type="ball-scale-multiple"></ngx-spinner>
@@ -57,9 +58,9 @@
     </div>
     <div class="right-panel panels col-lg-3 col-md-3 col-sm-3">
       <div class="profile-container container">
-        <div #cr class="cr">
+        <div #cr class="cr" (click)="displayCR(cr)">
           <div class="dot-online" *ngIf="activeChatRequest > 0"></div>
-          <p (click)="displayCR(cr)">Whispers</p>
+          <p>Whispers</p>
           <app-chat-requests class="app-chat-requests" (selectedChat)="getSelectedUsers($event)"
                              (resized)="resizeCr($event, cr)"
                              [chatRequests]="chatRequests"
@@ -94,8 +95,10 @@
           <img src="../../assets/images/travel_by_air.jpg" alt="My Profile Picture">
         </div>
       </div>
-      <textarea #message placeholder="Type a message" (keyup.enter)="sendSimpleMessage(message, 0)"></textarea>
-      <button #sendBtn class="btn-send btn btn-primary" type="submit" (click)="sendSimpleMessage(sendBtn, 1)">
+      <textarea #messageMobile placeholder="Type a message"
+                (keyup.enter)="sendSimpleMessage(messageMobile, 0)"></textarea>
+      <button #sendBtnMobile class="btn-send btn btn-primary" type="submit"
+              (click)="sendSimpleMessage(sendBtnMobile, 1)">
         <img src="../../assets/images/sharp_send_white_24dp.png" alt="Send">
       </button>
     </div>

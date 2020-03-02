@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../services/auth.service';
-import {ChatService} from "../services/chat.service";
+import {ChatService} from '../services/chat.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
   public counter = 0;
   public notification: string;
   public clickCounter = 0;
-
+  public opened = 0;
   constructor(public authService: AuthService, private chatService: ChatService) {
   }
 
@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
       menuName.style.transform = 'translateY(0%)';
       menuName.childNodes[1].style.transform = 'rotate(180deg)';
       this.clickCounter++;
+      this.opened++;
     } else {
       menu.style.display = 'none';
       menuDisplayer.style.height = '60px';
@@ -40,9 +41,13 @@ export class HeaderComponent implements OnInit {
       menuName.style.transform = 'translateY(-50%)';
       menuName.childNodes[1].style.transform = 'rotate(0deg)';
       this.clickCounter--;
+      this.opened--;
     }
   }
 
+  onDragStart(event) {
+    console.log('wsh');
+  }
   ngOnInit() {
     this.notification = '';
     this.chatService.checkFulfilled().subscribe(chatRequest => {

@@ -32,6 +32,7 @@ import {AdminService} from './admin/services/admin.service';
 import {ChatRequestsComponent} from './chat-requests/chat-requests.component';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     NgSelectModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
+    DragDropModule,
   ],
   providers: [
     AuthService,
@@ -69,7 +71,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     TeamsService,
     GamesService,
     NgSelectConfig,
-    AdminService
+    AdminService,
     // {provide: SELECTION_MODEL_FACTORY, useValue: CustomSelectionFactory as SelectionModelFactory }
   ],
   bootstrap: [AppComponent]

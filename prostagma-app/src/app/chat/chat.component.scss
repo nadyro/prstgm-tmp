@@ -17,33 +17,15 @@
   text-align: center;
 }
 
-.chat-page .messenger-container .borders {
-  position: absolute;
-  height: 100px;
-  width: 1px;
-  background: black;
-  transform: translateY(-50%);
-  top: 50%;
-}
-
-.chat-page .messenger-container .borders.right {
-  right: 0;
-}
-
-.chat-page .messenger-container .borders.left {
-  left: 0;
-}
-
-.chat-page .messenger-container .middle-panel .borders {
-  height: 300px;
-}
-
 .profile-container {
   position: relative;
   transform: translateY(-50%);
   top: 50%;
 }
 
+.user-finder .custom {
+  z-index: 100000;
+}
 .profile-details {
   text-align: center;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
@@ -142,7 +124,7 @@
 
 .cr {
   position: relative;
-  height: 25px;
+  height: 100%;
   background: lightgreen;
   border-top-left-radius: 35px;
   box-shadow: 1px -1px 5px rgba(0, 0, 0, 0.5);
@@ -172,7 +154,6 @@
 }
 
 .app-chat-requests {
-  height: 110px;
   display: block;
   border-top: solid 1px;
 }
@@ -328,7 +309,7 @@
     display: block;
     border-top: none;
     position: absolute;
-    bottom: 50px;
+    bottom: 100%;
     width: 200px;
     padding: 15px;
     background: rgba(143, 238, 143, 0.2);
